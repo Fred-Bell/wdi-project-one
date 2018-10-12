@@ -1,41 +1,56 @@
+section{
+  width: 60vw;
+  height: 15vh;
+  background-color: darkgray;
+  position: fixed;
+  left: 20vw;
+}
+
+#top-banner{
+  top: 0;
+}
+
+#bottom-banner{
+  top: 75vh;
+}
 
 .container{
   display: flex;
   flex-wrap: wrap;
   position: absolute;
+  height: 60vh;
+  width: 60vw;
+  top: 15vh;
+  left: 20vw;
   /* height: 1000px;
   width: 1500px;
   top: -100px;
   left: 50px; */
 }
-
-.grid-square{
+.container div{
   height: 10%;
   width: 5.5%;
   box-sizing: border-box;
-  /* height: 48px;
-  width: 48px; */
   border: 1px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 0px;
+}
+.grid-square{
+  /* height: 48px;
+  width: 48px; */
   background-color: transparent;
-  font-size: 20px;
 }
 
 .enterable{
-  height: 10%;
-  width: 5.5%;
-  box-sizing: border-box;
-  border: 1px solid black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: blue;
-  font-size: 20px;
 }
 
-
+.selected{
+  background-image: url(knife.png);
+  transform: rotate(180deg);
+}
 /*
 .not-enterable{
   background-color: red;

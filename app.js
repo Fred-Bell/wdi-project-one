@@ -14,47 +14,84 @@ for(let i = 1; i < 600 ; i++){
     $newDiv.html('');
   }
 }
+// $container.css('height', '60vh');
+// $container.css('width', '60vw');
+// $container.css('top', '15vh');
+// $container.css('left', '20vw');
+
 //Global variables
+let isPlayer1 = true;
 
 //DOM elements
 const $allSquares = $container.children();
 const $removeThis = $('.not-enterable');
+const $moveButton = $('#move-button');
+const $endTurnButton = $('#end-turn');
+const $playerBanner = $('h1');
 
 //Objects
 const character1 = {
-  currentPosition: 284,
+  currentPosition: 277,
   moveSpeed: 3
 };
 
+//Arrays
+const occupiedSquares = [];
 
+//Functions
+function moveMode(){
+  const position = currentCharacter.currentPosition;
+  const moveSpeed = currentCharacter.moveSpeed;
+  const enterables = [];
+  for (let i = 0; i < moveSpeed; i++){
+    enterables.push(position - (moveSpeed - i));
+    enterables.push(position + (moveSpeed - i));
+    enterables.push(position - (moveSpeed - i) * 30);
+    enterables.push(position + (moveSpeed - i) * 30);
+  }
+  for (let i = 0; i < enterables.length; i++){
+    const isEnterable = $allSquares.eq(enterables[i]);
+    isEnterable.addClass('enterable');
+  }
+  for (let i = 0; i < enterables.length; i++){
+    const isOccupied = $allSquares.eq(occupiedSquares[i]);
+    isOccupied.removeClass('enterable');
+  }
+  $('.enterable').click(handleMove);
+}
 
+function handleMove(){
+  const index = occupiedSquares.indexOf(currentCharacter.currentPosition);
+  if (index > -1){
+    occupiedSquares.splice(index, 1);
+  }
+  character1.currentPosition = parseInt($(this).html());
+  $('.enterable').removeClass().addClass('grid-square');
+  $('.selected').removeClass().addClass('grid-square');
+  $selectedSquare = $allSquares.eq(currentCharacter.currentPosition);
+  $selectedSquare.addClass('selected');
+  occupiedSquares.push(currentCharacter.currentPosition);
+}
+
+function endTurn(){
+  isPlayer1 = !isPlayer1;
+  if (isPlayer1){
+    $playerBanner.html('Player 1\'s turn');
+  } else{
+    $playerBanner.html('Player 2\'s turn');
+  }
+}
+
+///////////////////////////////////////////////////////////////////////////////////
 $removeThis.remove();
-$container.css('height', '60vh');
-$container.css('width', '60vw');
-$container.css('top', '15vh');
-$container.css('left', '20vw');
 
-
-const $testSquare = $allSquares.eq(284);
-$testSquare.css('background-color', 'green');
+const currentCharacter = character1;
+let $selectedSquare = $allSquares.eq(character1.currentPosition);
+$selectedSquare.addClass('selected');
+occupiedSquares.push(character1.currentPosition);
 // $testSquare.html('');
 // $testSquare.append('<img src="knife.png"/>');
 // $('img').css('transform', 'rotate(270deg)');
 
-
-const $moveButton = $('#move-button');
-$moveButton.click(function(){
-  const position = character1.currentPosition;
-  const moveSpeed = character1.moveSpeed;
-  const enterable = [];
-  for (let i = 0; i < moveSpeed; i++){
-    enterable.push(position - (moveSpeed - i));
-    enterable.push(position + (moveSpeed - i));
-    enterable.push(position - (moveSpeed - i) * 30);
-    enterable.push(position + (moveSpeed - i) * 30);
-  }
-  for (let i = 0; i < enterable.length; i++){
-    const $enterable = $allSquares.eq(enterable[i]);
-    $enterable.addClass('enterable');
-  }
-});
+$moveButton.click(moveMode);
+$endTurnButton.click(endTurn);
