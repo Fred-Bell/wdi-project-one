@@ -1,3 +1,54 @@
+//Functions
+function moveMode(){
+  const position = currentCharacter.currentPosition;
+  const moveSpeed = currentCharacter.moveSpeed;
+  const enterables = [];
+  for (let i = 0; i < moveSpeed; i++){
+    enterables.push(position - (moveSpeed - i));
+    enterables.push(position + (moveSpeed - i));
+    enterables.push(position - (moveSpeed - i) * 30);
+    enterables.push(position + (moveSpeed - i) * 30);
+  }
+  for (let i = 0; i < enterables.length; i++){
+    const isEnterable = $allSquares.eq(enterables[i]);
+    isEnterable.addClass('enterable');
+  }
+  for (let i = 0; i < enterables.length; i++){
+    const isOccupied = $allSquares.eq(occupiedSquares[i]);
+    isOccupied.removeClass('enterable');
+  }
+  $('.enterable').click(handleMove);
+}
+
+function handleMove(){
+  const index = occupiedSquares.indexOf(currentCharacter.currentPosition);
+  if (index > -1){
+    occupiedSquares.splice(index, 1);
+  }
+  currentCharacter.currentPosition = parseInt($(this).html());
+  $('.enterable').off();
+  $('.enterable').removeClass().addClass('grid-square');
+  $('.player' + currentCharacter.player + '-soldier').removeClass().addClass('grid-square');
+  $currentCharacter = $allSquares.eq(currentCharacter.currentPosition);
+  $currentCharacter.addClass('player' + currentCharacter.player + '-soldier');
+  occupiedSquares.push(currentCharacter.currentPosition);
+  $moveButton.detach();
+  $bottomBanner.append($endTurnButton);
+}
+
+function endTurn(){
+  isPlayer1 = !isPlayer1;
+  if (isPlayer1){
+    $playerBanner.html('Player 1\'s turn');
+    currentCharacter = character1;
+  } else{
+    $playerBanner.html('Player 2\'s turn');
+    currentCharacter = character2;
+  }
+  $bottomBanner.append($moveButton);
+  $endTurnButton.detach();
+}
+
 //generates our grid
 const $container = $('.container');
 for(let i = 1; i < 600 ; i++){
@@ -28,70 +79,39 @@ const $removeThis = $('.not-enterable');
 const $moveButton = $('#move-button');
 const $endTurnButton = $('#end-turn');
 const $playerBanner = $('h1');
+const $bottomBanner = $('#bottom-banner');
+let $currentCharacter;
 
 //Objects
 const character1 = {
   currentPosition: 277,
-  moveSpeed: 3
+  moveSpeed: 3,
+  player: 1
+};
+
+const character2 = {
+  currentPosition: 292,
+  moveSpeed: 3,
+  player: 2
 };
 
 //Arrays
 const occupiedSquares = [];
 
-//Functions
-function moveMode(){
-  const position = currentCharacter.currentPosition;
-  const moveSpeed = currentCharacter.moveSpeed;
-  const enterables = [];
-  for (let i = 0; i < moveSpeed; i++){
-    enterables.push(position - (moveSpeed - i));
-    enterables.push(position + (moveSpeed - i));
-    enterables.push(position - (moveSpeed - i) * 30);
-    enterables.push(position + (moveSpeed - i) * 30);
-  }
-  for (let i = 0; i < enterables.length; i++){
-    const isEnterable = $allSquares.eq(enterables[i]);
-    isEnterable.addClass('enterable');
-  }
-  for (let i = 0; i < enterables.length; i++){
-    const isOccupied = $allSquares.eq(occupiedSquares[i]);
-    isOccupied.removeClass('enterable');
-  }
-  $('.enterable').click(handleMove);
-}
 
-function handleMove(){
-  const index = occupiedSquares.indexOf(currentCharacter.currentPosition);
-  if (index > -1){
-    occupiedSquares.splice(index, 1);
-  }
-  character1.currentPosition = parseInt($(this).html());
-  $('.enterable').removeClass().addClass('grid-square');
-  $('.selected').removeClass().addClass('grid-square');
-  $selectedSquare = $allSquares.eq(currentCharacter.currentPosition);
-  $selectedSquare.addClass('selected');
-  occupiedSquares.push(currentCharacter.currentPosition);
-}
-
-function endTurn(){
-  isPlayer1 = !isPlayer1;
-  if (isPlayer1){
-    $playerBanner.html('Player 1\'s turn');
-  } else{
-    $playerBanner.html('Player 2\'s turn');
-  }
-}
 
 ///////////////////////////////////////////////////////////////////////////////////
 $removeThis.remove();
+$endTurnButton.detach();
+let currentCharacter = character1;
+$allSquares.eq(character1.currentPosition).addClass('player1-soldier');
+$allSquares.eq(character2.currentPosition).addClass('player2-soldier');
 
-const currentCharacter = character1;
-let $selectedSquare = $allSquares.eq(character1.currentPosition);
-$selectedSquare.addClass('selected');
+
 occupiedSquares.push(character1.currentPosition);
-// $testSquare.html('');
-// $testSquare.append('<img src="knife.png"/>');
-// $('img').css('transform', 'rotate(270deg)');
+occupiedSquares.push(character2.currentPosition);
+
+
 
 $moveButton.click(moveMode);
 $endTurnButton.click(endTurn);

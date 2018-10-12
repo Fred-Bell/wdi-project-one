@@ -47,9 +47,13 @@ section{
   background-color: blue;
 }
 
-.selected{
+.player1-soldier{
   background-image: url(knife.png);
   transform: rotate(180deg);
+}
+
+.player2-soldier{
+  background-image: url(axe.png);
 }
 /*
 .not-enterable{
