@@ -18,9 +18,11 @@ function moveMode(){
     isOccupied.removeClass('enterable');
   }
   $('.enterable').click(handleMove);
+  $endTurnButton.off();
 }
 
 function handleMove(){
+  console.log('moved');
   const index = occupiedSquares.indexOf(currentCharacter.currentPosition);
   if (index > -1){
     occupiedSquares.splice(index, 1);
@@ -32,8 +34,35 @@ function handleMove(){
   $currentCharacter = $allSquares.eq(currentCharacter.currentPosition);
   $currentCharacter.addClass('player' + currentCharacter.player + '-soldier');
   occupiedSquares.push(currentCharacter.currentPosition);
-  $moveButton.detach();
-  $bottomBanner.append($endTurnButton);
+  $moveButton.off();
+  $endTurnButton.click(endTurn);
+}
+
+function attackMode(){
+  const position = currentCharacter.currentPosition;
+  const attackRange = currentCharacter.attackRange;
+  const attackables = [];
+  for (let i = 0; i < attackRange; i++){
+    attackables.push(position - (attackRange - i));
+    attackables.push(position + (attackRange - i));
+    attackables.push(position - (attackRange - i) * 30);
+    attackables.push(position + (attackRange - i) * 30);
+  }
+  for (let i = 0; i < attackables.length; i++){
+    if (attackables.includes(occupiedSquares[i])) {
+      const attackable = $allSquares.eq(occupiedSquares[i]);
+      attackable.addClass('attackable');
+    }
+  }
+  $('.attackable').click(handleAttack);
+  $attackButton.off();
+}
+
+function handleAttack(){
+  console.log('murked');
+  //need to write this function
+  //every time end turn is pressed it adds another event listener to attackMode
+  //maybe add an if statement so it only does that if attack has been used
 }
 
 function endTurn(){
@@ -45,8 +74,8 @@ function endTurn(){
     $playerBanner.html('Player 2\'s turn');
     currentCharacter = character2;
   }
-  $bottomBanner.append($moveButton);
-  $endTurnButton.detach();
+  $moveButton.click(moveMode);
+  $attackButton.click(attackMode);
 }
 
 //generates our grid
@@ -77,21 +106,23 @@ let isPlayer1 = true;
 const $allSquares = $container.children();
 const $removeThis = $('.not-enterable');
 const $moveButton = $('#move-button');
+const $attackButton = $('#attack-button');
 const $endTurnButton = $('#end-turn');
 const $playerBanner = $('h1');
-const $bottomBanner = $('#bottom-banner');
 let $currentCharacter;
 
 //Objects
 const character1 = {
-  currentPosition: 277,
+  currentPosition: 290,
   moveSpeed: 3,
+  attackRange: 1,
   player: 1
 };
 
 const character2 = {
   currentPosition: 292,
   moveSpeed: 3,
+  attackRange: 1,
   player: 2
 };
 
@@ -102,7 +133,7 @@ const occupiedSquares = [];
 
 ///////////////////////////////////////////////////////////////////////////////////
 $removeThis.remove();
-$endTurnButton.detach();
+
 let currentCharacter = character1;
 $allSquares.eq(character1.currentPosition).addClass('player1-soldier');
 $allSquares.eq(character2.currentPosition).addClass('player2-soldier');
@@ -114,4 +145,5 @@ occupiedSquares.push(character2.currentPosition);
 
 
 $moveButton.click(moveMode);
+$attackButton.click(attackMode);
 $endTurnButton.click(endTurn);

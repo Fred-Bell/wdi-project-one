@@ -1,17 +1,35 @@
+body{
+  background-image: url(jnYDcHG.jpg);
+}
+
 section{
   width: 60vw;
   height: 15vh;
   background-color: darkgray;
   position: fixed;
   left: 20vw;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 #top-banner{
   top: 0;
 }
 
+h1{
+  font-size: 50px;
+  font-weight: bold;
+  color: red;
+}
+
 #bottom-banner{
   top: 75vh;
+}
+
+button{
+  width: 15vw;
+  height: 10vh;
 }
 
 .container{
@@ -45,6 +63,9 @@ section{
 
 .enterable{
   background-color: blue;
+}
+.attackable{
+  background-color: red;
 }
 
 .player1-soldier{
