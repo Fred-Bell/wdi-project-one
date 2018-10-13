@@ -65,7 +65,7 @@ function handleAttack(){
     return character.currentPosition === parseInt($(this).html());
   });
   const attackedCharacter = attackedCharacterArray[0];
-  attackedCharacter.currentHealth = attackedCharacter.currentHealth - currentCharacter.attack;
+  attackedCharacter.currentHealth = attackedCharacter.currentHealth - (Math.floor(Math.random() * 4) + 4);
   const $attackedHealth = $('#slot-' + attackedCharacter.player + '-' + attackedCharacter.characterSlot).children('p');
   $attackedHealth.html(attackedCharacter.currentHealth + '/' + attackedCharacter.maxHealth);
   const healthPercentage = (attackedCharacter.currentHealth / attackedCharacter.maxHealth) * 100;
@@ -80,6 +80,7 @@ function handleAttack(){
   //need to write an if statement checking if attackedCharacter.currentHealth = 0
   // then make what happens when a character dies
   // also need to fix character move but no attack bug
+  //need to fix clicking attack button and not attacking breaknig button
 }
 
 function endTurn(){
@@ -141,7 +142,6 @@ const character1 = {
   attackRange: 1,
   maxHealth: 10,
   currentHealth: 10,
-  attack: 5,
   player: 1,
   characterSlot: 1,
   background: 'url(images/knife.png))'
@@ -153,7 +153,6 @@ const character2 = {
   attackRange: 1,
   maxHealth: 10,
   currentHealth: 10,
-  attack: 5,
   player: 2,
   characterSlot: 1,
   background: 'url(images/axe.png))'
