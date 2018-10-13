@@ -1,9 +1,9 @@
 body{
-  background-image: url(jnYDcHG.jpg);
+
 }
 
 section{
-  width: 60vw;
+  width: 59.5vw;
   height: 15vh;
   background-color: darkgray;
   position: fixed;
@@ -11,6 +11,9 @@ section{
   display: flex;
   justify-content: space-around;
   align-items: center;
+  border-top: black solid 3px;
+  border-bottom: black solid 3px;
+  box-sizing: border-box;
 }
 
 #top-banner{
@@ -24,12 +27,91 @@ h1{
 }
 
 #bottom-banner{
-  top: 75vh;
+  top: 74.5vh;
+  height: 15.5vh;
 }
 
 button{
   width: 15vw;
   height: 10vh;
+  background-color: purple;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+aside{
+  height: 90vh;
+  width: 10vw;
+  background-color: darkgray;
+  top: 0;
+  position: absolute;
+  border: black solid 3px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#aside-left{
+  left: 10vw;
+}
+
+#aside-right{
+  right: 10.6vw;
+}
+
+.character-slot{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 18vh;
+}
+
+h2{
+  text-align: center;
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: 28px;
+}
+
+.icon-left{
+  height: 10vh;
+  width: 5vw;
+  transform: rotate(180deg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.icon-right{
+  height: 10vh;
+  width: 5vw;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.health-bar{
+    height: 1vh;
+    width: 5vw;
+    background-color: darkgray;
+    margin-top: 1vh;
+    z-index: 1;
+}
+
+.health-green{
+    height: 100%;
+    width: 0%;
+    background-color: lightgreen;
+    z-index: 2;
+}
+
+aside p {
+    margin: 0 0 2vh 0;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 .container{
@@ -40,11 +122,21 @@ button{
   width: 60vw;
   top: 15vh;
   left: 20vw;
-  /* height: 1000px;
-  width: 1500px;
-  top: -100px;
-  left: 50px; */
 }
+
+.map-box{
+    height: 60vh;
+    width: 60vw;
+    top: 15vh;
+    left: 20vw;
+    background-image: url(images/forest-map.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    position: absolute;
+}
+
 .container div{
   height: 10%;
   width: 5.5%;
@@ -56,8 +148,6 @@ button{
   font-size: 0px;
 }
 .grid-square{
-  /* height: 48px;
-  width: 48px; */
   background-color: transparent;
 }
 
@@ -69,17 +159,16 @@ button{
 }
 
 .player1-soldier{
-  background-image: url(knife.png);
+  background-image: url(images/knife.png);
   transform: rotate(180deg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .player2-soldier{
-  background-image: url(axe.png);
+  background-image: url(images/axe.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
-/*
-.not-enterable{
-  background-color: red;
-  height: 48px;
-  width: 48px;
-  border: 1px solid black;
-} */
