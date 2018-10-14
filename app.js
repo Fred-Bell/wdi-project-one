@@ -8,6 +8,14 @@ function moveMode(){
     enterables.push(position + (moveSpeed - i));
     enterables.push(position - (moveSpeed - i) * 30);
     enterables.push(position + (moveSpeed - i) * 30);
+    enterables.push((position - (moveSpeed - i) * 30) + i);
+    enterables.push((position - (moveSpeed - i) * 30) - i);
+    enterables.push((position + (moveSpeed - i) * 30) + i);
+    enterables.push((position + (moveSpeed - i) * 30) - i);
+    enterables.push((position - (moveSpeed - i) * 30) - i * 0.5);
+    enterables.push((position - (moveSpeed - i) * 30) + i * 0.5);
+    enterables.push((position + (moveSpeed - i) * 30) - i * 0.5);
+    enterables.push((position + (moveSpeed - i) * 30) + i * 0.5);
   }
   for (let i = 0; i < enterables.length; i++){
     const isEnterable = $allSquares.eq(enterables[i]);
@@ -93,12 +101,32 @@ function handleAttack(){
   attackedCharacter.currentHealth = attackedCharacter.currentHealth - damageDealt;
   if (attackedCharacter.currentHealth <= 0) {
     attackedCharacter.currentHealth = 0;
+    $('.attackable').off();
     $allSquares.eq(attackedCharacter.currentPosition).removeClass().addClass('grid-square').addClass('blood');
     $('#slot-' + attackedCharacter.player + '-' + attackedCharacter.characterSlot).children('.icon').html('X');
     const indexInLiving = livingCharacters.indexOf(attackedCharacter);
     livingCharacters.splice(indexInLiving, 1);
     const indexInOccupied = occupiedSquares.indexOf(attackedCharacter.currentPosition);
     occupiedSquares.splice(indexInOccupied, 1);
+    if (attackedCharacter.player === 1){
+      const indexInPlayer1 = player1Characters.indexOf(attackedCharacter);
+      player1Characters.splice(indexInPlayer1, 1);
+      if (player1Characters.length === 0) {
+        const $newDiv = $('<div></div>').addClass('victory-screen');
+        $newDiv.html('PLAYER 2 WINS!!!!');
+        $('body').prepend($newDiv);
+      }
+    }
+    if (attackedCharacter.player === 2){
+      const indexInPlayer2 = player2Characters.indexOf(attackedCharacter);
+      player2Characters.splice(indexInPlayer2, 1);
+      if (player2Characters.length === 0) {
+        const $newDiv = $('<div></div>').addClass('victory-screen');
+        $newDiv.html('PLAYER 1 WINS!!!!');
+        $('body').prepend($newDiv);
+      }
+
+    }
   }
   const $newP = $('<p></p>');
   $newP.html(damageDealt);
@@ -137,13 +165,22 @@ function cancelAttack(){
 }
 
 function endTurn(){
+  $allSquares.eq(currentCharacter.currentPosition).removeClass('selected');
   isPlayer1 = !isPlayer1;
   if (isPlayer1){
     $playerBanner.html('Player 1\'s turn');
-    currentCharacter = character1;
+    if (player1Characters.length -1 < characterIndex1){
+      characterIndex1 = 0;
+    }
+    currentCharacter = player1Characters[characterIndex1];
+    characterIndex1++;
   } else{
     $playerBanner.html('Player 2\'s turn');
-    currentCharacter = character2;
+    if (player2Characters.length - 1 < characterIndex2){
+      characterIndex2 = 0;
+    }
+    currentCharacter = player2Characters[characterIndex2];
+    characterIndex2++;
   }
   if (hasMoved){
     $moveButton.click(moveMode);
@@ -155,6 +192,7 @@ function endTurn(){
     hasAttacked = false;
     $attackButton.css('background-color', 'red');
   }
+  $allSquares.eq(currentCharacter.currentPosition).addClass('selected');
 }
 
 //generates our grid
@@ -179,6 +217,8 @@ let isPlayer1 = true;
 let hasMoved = false;
 let hasAttacked = false;
 let currentCharacter;
+let characterIndex1 = 1;
+let characterIndex2 = 0;
 
 //DOM elements
 const $allSquares = $container.children();
@@ -281,12 +321,16 @@ const character8 = {
 const occupiedSquares = [];
 const livingCharacters = [];
 const addedCharacters = [character1, character2, character3, character4, character5, character6, character7, character8];
+const player1Characters = [character1, character3, character5, character7];
+const player2Characters = [character2, character4, character6, character8];
 
 ///////////////////////////////////////////////////////////////////////////////////
 $removeThis.remove();
 
 
 currentCharacter = character1;
+$allSquares.eq(currentCharacter.currentPosition).addClass('selected');
+
 
 for (let i = 0; i < addedCharacters.length; i++){
   const addingCharacter = addedCharacters[i];

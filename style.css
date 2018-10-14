@@ -148,11 +148,15 @@ aside p {
 }
 
 .enterable{
-  background-color: blue;
+  background-color: rgba(0, 0, 255, 0.5);
 }
 
 .attackable{
-  background-color: red;
+  background-color: rgba(255, 0, 0, 0.5);
+}
+
+.selected{
+  background-color: rgba(255, 255, 0, 0.75);
 }
 
 .blood{
@@ -181,6 +185,23 @@ aside p {
   font-size: 50px;
   font-weight: bold;
   color: red;
+}
+
+.victory-screen{
+  height: 60vh;
+  width: 59.5vw;
+  top: 15vh;
+  left: 20vw;
+  position: absolute;
+  z-index: 2;
+  background-color: black;
+  font-size: 100px;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 @keyframes fadeOutUp {
