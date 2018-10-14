@@ -1,5 +1,5 @@
 body{
-
+  font-family: helvetica;
 }
 
 section{
@@ -76,21 +76,16 @@ h2{
   font-size: 28px;
 }
 
-.icon-left{
-  height: 10vh;
-  width: 5vw;
-  transform: rotate(180deg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-}
-
-.icon-right{
+.icon{
   height: 10vh;
   width: 5vw;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  font-size: 75px;
+  text-align: center;
+  color: red;
+  font-weight: bold;
 }
 
 .health-bar{
@@ -147,6 +142,7 @@ aside p {
   align-items: center;
   font-size: 0px;
 }
+
 .grid-square{
   background-color: transparent;
 }
@@ -154,13 +150,20 @@ aside p {
 .enterable{
   background-color: blue;
 }
+
 .attackable{
   background-color: red;
 }
 
+.blood{
+  background-image: url(images/blood.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
 .player1-soldier{
   background-image: url(images/knife.png);
-  transform: rotate(180deg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -171,4 +174,22 @@ aside p {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+}
+
+.container div p{
+  animation: fadeOutUp 2s 1;
+  font-size: 50px;
+  font-weight: bold;
+  color: red;
+}
+
+@keyframes fadeOutUp {
+   0% {
+      opacity: 1;
+      transform: translateY(0);
+   }
+   100% {
+      opacity: 0;
+      transform: translateY(-40px);
+   }
 }

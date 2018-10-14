@@ -17,11 +17,16 @@ function moveMode(){
     const isOccupied = $allSquares.eq(occupiedSquares[i]);
     isOccupied.removeClass('enterable');
   }
+  $moveButton.off();
+  $moveButton.click(cancelMove);
+  $moveButton.html('CANCEL');
   $('.enterable').click(handleMove);
   $endTurnButton.off();
+  $attackButton.off();
 }
 
 function handleMove(){
+  $allSquares.eq(currentCharacter.currentPosition).removeClass().addClass('grid-square');
   const index = occupiedSquares.indexOf(currentCharacter.currentPosition);
   if (index > -1){
     occupiedSquares.splice(index, 1);
@@ -29,14 +34,30 @@ function handleMove(){
   currentCharacter.currentPosition = parseInt($(this).html());
   $('.enterable').off();
   $('.enterable').removeClass('enterable');
-  $('.player' + currentCharacter.player + '-soldier').removeClass().addClass('grid-square');
   $currentCharacter = $allSquares.eq(currentCharacter.currentPosition);
   $currentCharacter.addClass('player' + currentCharacter.player + '-soldier');
   occupiedSquares.push(currentCharacter.currentPosition);
   $moveButton.off();
   $moveButton.css('background-color', 'black');
+  $moveButton.html('MOVE');
   $endTurnButton.click(endTurn);
   hasMoved = true;
+  if (!hasAttacked){
+    $attackButton.click(attackMode);
+  }
+}
+
+function cancelMove(){
+  $moveButton.html('MOVE');
+  $('.enterable').off();
+  $('.enterable').removeClass('enterable');
+  hasMoved = false;
+  $moveButton.off();
+  $moveButton.click(moveMode);
+  $endTurnButton.click(endTurn);
+  if (!hasAttacked){
+    $attackButton.click(attackMode);
+  }
 }
 
 function attackMode(){
@@ -49,7 +70,7 @@ function attackMode(){
     attackables.push(position - (attackRange - i) * 30);
     attackables.push(position + (attackRange - i) * 30);
   }
-  for (let i = 0; i < attackables.length; i++){
+  for (let i = 0; i < 8; i++){
     if (attackables.includes(occupiedSquares[i])) {
       const attackable = $allSquares.eq(occupiedSquares[i]);
       attackable.addClass('attackable');
@@ -57,6 +78,9 @@ function attackMode(){
   }
   $('.attackable').click(handleAttack);
   $attackButton.off();
+  $moveButton.off();
+  $attackButton.click(cancelAttack);
+  $attackButton.html('CANCEL');
   $endTurnButton.off();
 }
 
@@ -65,7 +89,24 @@ function handleAttack(){
     return character.currentPosition === parseInt($(this).html());
   });
   const attackedCharacter = attackedCharacterArray[0];
-  attackedCharacter.currentHealth = attackedCharacter.currentHealth - (Math.floor(Math.random() * 4) + 4);
+  const damageDealt = Math.floor(Math.random() * 4) + currentCharacter.attack;
+  attackedCharacter.currentHealth = attackedCharacter.currentHealth - damageDealt;
+  if (attackedCharacter.currentHealth <= 0) {
+    attackedCharacter.currentHealth = 0;
+    $allSquares.eq(attackedCharacter.currentPosition).removeClass().addClass('grid-square').addClass('blood');
+    $('#slot-' + attackedCharacter.player + '-' + attackedCharacter.characterSlot).children('.icon').html('X');
+    const indexInLiving = livingCharacters.indexOf(attackedCharacter);
+    livingCharacters.splice(indexInLiving, 1);
+    const indexInOccupied = occupiedSquares.indexOf(attackedCharacter.currentPosition);
+    occupiedSquares.splice(indexInOccupied, 1);
+  }
+  const $newP = $('<p></p>');
+  $newP.html(damageDealt);
+  $allSquares.eq(attackedCharacter.currentPosition).append($newP);
+  function removeP(){
+    $newP.remove();
+  }
+  setTimeout(removeP, 2000);
   const $attackedHealth = $('#slot-' + attackedCharacter.player + '-' + attackedCharacter.characterSlot).children('p');
   $attackedHealth.html(attackedCharacter.currentHealth + '/' + attackedCharacter.maxHealth);
   const healthPercentage = (attackedCharacter.currentHealth / attackedCharacter.maxHealth) * 100;
@@ -76,11 +117,23 @@ function handleAttack(){
   hasAttacked = true;
   $attackButton.css('background-color', 'black');
   $endTurnButton.click(endTurn);
+  $attackButton.html('ATTACK');
+  if (!hasMoved){
+    $moveButton.click(moveMode);
+  }
+}
 
-  //need to write an if statement checking if attackedCharacter.currentHealth = 0
-  // then make what happens when a character dies
-  // also need to fix character move but no attack bug
-  //need to fix clicking attack button and not attacking breaknig button
+function cancelAttack(){
+  $attackButton.html('ATTACK');
+  $('.attackable').off();
+  $('.attackable').removeClass('attackable');
+  hasAttacked = false;
+  $attackButton.off();
+  $attackButton.click(attackMode);
+  $endTurnButton.click(endTurn);
+  if (!hasMoved){
+    $moveButton.click(moveMode);
+  }
 }
 
 function endTurn(){
@@ -125,6 +178,7 @@ for(let i = 1; i < 600 ; i++){
 let isPlayer1 = true;
 let hasMoved = false;
 let hasAttacked = false;
+let currentCharacter;
 
 //DOM elements
 const $allSquares = $container.children();
@@ -137,57 +191,115 @@ let $currentCharacter;
 
 //Objects
 const character1 = {
-  currentPosition: 345,
+  currentPosition: 339,
   moveSpeed: 3,
   attackRange: 1,
   maxHealth: 10,
   currentHealth: 10,
+  attack: 4,
   player: 1,
-  characterSlot: 1,
-  background: 'url(images/knife.png))'
+  characterSlot: 1
 };
 
 const character2 = {
+  currentPosition: 350,
+  moveSpeed: 3,
+  attackRange: 1,
+  maxHealth: 10,
+  currentHealth: 10,
+  attack: 4,
+  player: 2,
+  characterSlot: 1
+};
+
+const character3 = {
+  currentPosition: 277,
+  moveSpeed: 3,
+  attackRange: 1,
+  maxHealth: 10,
+  currentHealth: 10,
+  attack: 4,
+  player: 1,
+  characterSlot: 2
+};
+
+const character4 = {
+  currentPosition: 292,
+  moveSpeed: 3,
+  attackRange: 1,
+  maxHealth: 10,
+  currentHealth: 10,
+  attack: 4,
+  player: 2,
+  characterSlot: 2
+};
+
+const character5 = {
+  currentPosition: 397,
+  moveSpeed: 3,
+  attackRange: 1,
+  maxHealth: 10,
+  currentHealth: 10,
+  attack: 4,
+  player: 1,
+  characterSlot: 3
+};
+
+const character6 = {
+  currentPosition: 412,
+  moveSpeed: 3,
+  attackRange: 1,
+  maxHealth: 10,
+  currentHealth: 10,
+  attack: 4,
+  player: 2,
+  characterSlot: 3
+};
+
+const character7 = {
+  currentPosition: 337,
+  moveSpeed: 3,
+  attackRange: 1,
+  maxHealth: 10,
+  currentHealth: 10,
+  attack: 4,
+  player: 1,
+  characterSlot: 4
+};
+const character8 = {
   currentPosition: 352,
   moveSpeed: 3,
   attackRange: 1,
   maxHealth: 10,
   currentHealth: 10,
+  attack: 4,
   player: 2,
-  characterSlot: 1,
-  background: 'url(images/axe.png))'
+  characterSlot: 4
 };
 
 //Arrays
 const occupiedSquares = [];
-const livingCharacters = [ character1, character2 ];
-
+const livingCharacters = [];
+const addedCharacters = [character1, character2, character3, character4, character5, character6, character7, character8];
 
 ///////////////////////////////////////////////////////////////////////////////////
 $removeThis.remove();
 
 
-//need to refactor this mess so it can be applied to all characters entered in the game
-let currentCharacter = character1;
-$allSquares.eq(character1.currentPosition).addClass('player1-soldier');
-$allSquares.eq(character2.currentPosition).addClass('player2-soldier');
-occupiedSquares.push(character1.currentPosition);
-occupiedSquares.push(character2.currentPosition);
-const $character1Slot = $('#slot-' + character1.player + '-' + character1.characterSlot);
-const $character1Health = $character1Slot.children('p');
-$character1Health.html(character1.currentHealth + '/' + character1.maxHealth);
-$character1Slot.children('.health-bar').css('background-color', 'red');
-$character1Slot.find('.health-green').css('width', '100%');
-$character1Slot.children('.icon-left').css('background-image', 'url(images/knife.png)');
-const $character2Slot = $('#slot-' + character2.player + '-' + character2.characterSlot);
-const $character2Health = $character2Slot.children('p');
-$character2Health.html(character2.currentHealth + '/' + character2.maxHealth);
-$character2Slot.children('.health-bar').css('background-color', 'red');
-$character2Slot.find('.health-green').css('width', '100%');
-$character2Slot.children('.icon-right').css('background-image', 'url(images/axe.png)');
+currentCharacter = character1;
 
-
-
+for (let i = 0; i < addedCharacters.length; i++){
+  const addingCharacter = addedCharacters[i];
+  occupiedSquares.push(addingCharacter.currentPosition);
+  livingCharacters.push(addingCharacter);
+  const $addingSlot = $('#slot-' + addingCharacter.player + '-' + addingCharacter.characterSlot);
+  const $addingHealth = $addingSlot.children('p');
+  $addingHealth.html(addingCharacter.currentHealth + '/' + addingCharacter.maxHealth);
+  $addingSlot.children('.health-bar').css('background-color', 'red');
+  $addingSlot.find('.health-green').css('width', '100%');
+  $addingSlot.children('.icon').addClass('player' + addingCharacter.player + '-soldier');
+  $allSquares.eq(addingCharacter.currentPosition).addClass('player' + addingCharacter.player + '-soldier');
+}
 
 
 
