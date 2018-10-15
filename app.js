@@ -177,14 +177,22 @@ function attackMode(){
   $attackButton.html('CANCEL');
   $endTurnButton.off();
   if (currentCharacter.troopType === 4){
-    $moveButton.html('LIGHTNING BOLT');
+    $moveButton.html('LIGHTNING BOLT'); //need to write lightning bolt function (like move function ligtup 4 squares)
     $moveButton.css('background-color', 'skyblue');
-    $endTurnButton.html('FIRE BALL');
+    $endTurnButton.html('FIRE BALL'); //need to write fireball function (mouseover? highlight all selected squares (9?))
     $endTurnButton.css('background-color', 'orange');
   }
 }
 
 function handleAttack(){
+  if (currentCharacter.troopType === 4){
+    $moveButton.html('MOVE');
+    $moveButton.css('background-color', 'black');
+    $endTurnButton.html('END TURN');
+    $endTurnButton.css('background-color', 'purple');
+    $moveButton.off();
+    $endTurnButton.off();
+  }
   const attackedCharacterArray = livingCharacters.filter(character => {
     return character.currentPosition === parseInt($(this).html());
   });
@@ -249,13 +257,14 @@ function handleAttack(){
   $attackButton.html('ATTACK');
   if (!hasMoved){
     $moveButton.click(moveMode);
+    $moveButton.css('background-color', 'blue');
   }
 }
 
 function cancelAttack(){
   if (currentCharacter.troopType === 4){
     $moveButton.html('MOVE');
-    $moveButton.css('background-color', 'blue');
+    $moveButton.css('background-color', 'black');
     $endTurnButton.html('END TURN');
     $endTurnButton.css('background-color', 'purple');
     $moveButton.off();
@@ -270,6 +279,7 @@ function cancelAttack(){
   $endTurnButton.click(endTurn);
   if (!hasMoved){
     $moveButton.click(moveMode);
+    $moveButton.css('background-color', 'blue');
   }
 }
 
