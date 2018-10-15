@@ -1,7 +1,6 @@
 //Functions
 function startGame(){
   $('.start-menu').css('display', 'none');
-
 }
 
 function placeCharacter(){
@@ -177,10 +176,11 @@ function attackMode(){
   $attackButton.html('CANCEL');
   $endTurnButton.off();
   if (currentCharacter.troopType === 4){
-    $moveButton.html('LIGHTNING BOLT'); //need to write lightning bolt function (like move function ligtup 4 squares)
-    $moveButton.css('background-color', 'skyblue');
-    $endTurnButton.html('FIRE BALL'); //need to write fireball function (mouseover? highlight all selected squares (9?))
+    $moveButton.html('HEAL WOUNDS'); //need to write lightning bolt function (like move function ligtup 4 squares)
+    $moveButton.css('background-color', 'green');
+    $endTurnButton.html('FIRE BALL');
     $endTurnButton.css('background-color', 'orange');
+    $endTurnButton.click(fireball);
   }
 }
 
@@ -269,6 +269,7 @@ function cancelAttack(){
     $endTurnButton.css('background-color', 'purple');
     $moveButton.off();
     $endTurnButton.off();
+    $allSquares.off();
   }
   $attackButton.html('ATTACK');
   $('.attackable').off();
@@ -282,6 +283,88 @@ function cancelAttack(){
     $moveButton.css('background-color', 'blue');
   }
 }
+
+function fireball(){
+  $('.attackable').off();
+  $('.attackable').removeClass('attackable');
+  $allSquares.mouseover(function(){
+    $(this).click(handleFireball);
+    const position = parseInt($(this).html());
+    const blastzone = [position, position - 1, position + 1, position - 30, position + 30, position - 31, position + 31, position -29, position + 29];
+    for ( let i = 0; i < blastzone.length; i++){
+      $allSquares.eq(blastzone[i]).addClass('fireball');
+    }
+  });
+  $allSquares.mouseout(function(){
+    $allSquares.removeClass('fireball');
+    $allSquares.off('click');
+  });
+}
+
+function handleFireball(){
+  const position = parseInt($(this).html());
+  const $newDiv = $('<div></div>');
+  $newDiv.attr('id', 'explosion');
+  $newDiv.css({top: $allSquares.eq(position - 30).offset().top + 'px', left: $allSquares.eq(position - 2).offset().left + 'px'});
+  $('body').append($newDiv);
+  setTimeout(function(){
+    $newDiv.remove();
+  }, 2000);
+  const blastzone = [position, position - 1, position + 1, position - 30, position + 30, position - 31, position + 31, position -29, position + 29];
+  for (let i = 0; i < 8; i++){
+    if (blastzone.includes(parseInt(addedCharacters[i].currentPosition))) {
+      const burntCharacter = addedCharacters[i];
+      const damageDealt = (Math.floor(Math.random() * 3) + 2);
+      burntCharacter.currentHealth = burntCharacter.currentHealth - damageDealt;
+      const $newP = $('<p></p>');
+      $newP.html(damageDealt);
+      $allSquares.eq(burntCharacter.currentPosition).append($newP);
+      setTimeout(function(){
+        $newP.remove();
+      }, 2000);
+      if (burntCharacter.currentHealth <= 0) {
+        burntCharacter.currentHealth = 0;
+        $('.attackable').off();
+        $allSquares.eq(burntCharacter.currentPosition).removeClass().addClass('grid-square').addClass('blood');
+        $('#slot-' + burntCharacter.player + '-' + burntCharacter.characterSlot).children('.icon').html('X');
+        const indexInLiving = livingCharacters.indexOf(burntCharacter);
+        livingCharacters.splice(indexInLiving, 1);
+        const indexInOccupied = occupiedSquares.indexOf(burntCharacter.currentPosition);
+        occupiedSquares.splice(indexInOccupied, 1);
+        if (burntCharacter.player === 1){
+          const indexInPlayer1 = player1Characters.indexOf(burntCharacter);
+          player1Characters.splice(indexInPlayer1, 1);
+          if (player1Characters.length === 0) {
+            const $newDiv = $('<div></div>').addClass('victory-screen');
+            $newDiv.html('PLAYER 2 WINS!!!!');
+            $('body').prepend($newDiv);
+          }
+        }
+        if (burntCharacter.player === 2){
+          const indexInPlayer2 = player2Characters.indexOf(burntCharacter);
+          player2Characters.splice(indexInPlayer2, 1);
+          if (player2Characters.length === 0) {
+            const $newDiv = $('<div></div>').addClass('victory-screen');
+            $newDiv.html('PLAYER 1 WINS!!!!');
+            $('body').prepend($newDiv);
+          }
+        }
+      }
+      const $attackedHealth = $('#slot-' + burntCharacter.player + '-' + burntCharacter.characterSlot).children('p');
+      $attackedHealth.html(burntCharacter.currentHealth + '/' + burntCharacter.maxHealth);
+      const healthPercentage = (burntCharacter.currentHealth / burntCharacter.maxHealth) * 100;
+      const $attackedBar = $('#slot-' + burntCharacter.player + '-' + burntCharacter.characterSlot).find('.health-green');
+      $attackedBar.css('width', healthPercentage + '%');
+    }
+  }
+  cancelAttack();
+  $attackButton.off();
+  $attackButton.css('background-color', 'black');
+  $allSquares.removeClass('fireball');
+  $allSquares.off();
+  hasAttacked = true;
+}
+
 
 function endTurn(){
   $('#slot-' + currentCharacter.player + '-' + currentCharacter.characterSlot).find('.icon').removeClass('active');
@@ -385,7 +468,7 @@ const character3 = {
   attackRange: 30,
   maxHealth: 5,
   currentHealth: 5,
-  attack: 3,
+  attack: 2,
   player: 1,
   characterSlot: 2,
   troopType: 3
@@ -397,7 +480,7 @@ const character4 = {
   attackRange: 30,
   maxHealth: 5,
   currentHealth: 5,
-  attack: 3,
+  attack: 2,
   player: 2,
   characterSlot: 2,
   troopType: 3

@@ -197,6 +197,10 @@ aside p {
   border-radius: 50px;
 }
 
+.fireball{
+    background-color: rgba(255, 100, 0, 0.75);
+}
+
 .blood{
   background-image: url(images/blood.png);
   background-repeat: no-repeat;
@@ -300,6 +304,19 @@ aside p {
   transition: all 0.2s;
 }
 
+#explosion{
+  animation: tada 2s infinite;
+  background-image: url(images/boom.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 200px;
+  width: 200px;
+  background-color: transparent;
+  z-index: 2;
+  position: absolute;
+}
+
 @keyframes fadeOutUp {
    0% {
       opacity: 1;
@@ -309,4 +326,12 @@ aside p {
       opacity: 0;
       transform: translateY(-40px);
    }
+}
+
+@keyframes tada {
+  0% {transform: scale(1);}
+  10%, 20% {transform: scale(0.9) rotate(-3deg);}
+  30%, 50%, 70%, 90% {transform: scale(1.1) rotate(3deg);}
+  40%, 60%, 80% {transform: scale(1.1) rotate(-3deg);}
+  100% {transform: scale(1) rotate(0);}
 }
