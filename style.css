@@ -6,7 +6,7 @@ section{
   width: 59.5vw;
   height: 15vh;
   background-color: darkgray;
-  position: fixed;
+  position: absolute;
   left: 20vw;
   display: flex;
   justify-content: space-around;

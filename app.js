@@ -231,7 +231,7 @@ let $currentCharacter;
 
 //Objects
 const character1 = {
-  currentPosition: 339,
+  currentPosition: 343,
   moveSpeed: 3,
   attackRange: 1,
   maxHealth: 10,
@@ -242,7 +242,7 @@ const character1 = {
 };
 
 const character2 = {
-  currentPosition: 350,
+  currentPosition: 346,
   moveSpeed: 3,
   attackRange: 1,
   maxHealth: 10,
@@ -253,7 +253,7 @@ const character2 = {
 };
 
 const character3 = {
-  currentPosition: 277,
+  currentPosition: 281,
   moveSpeed: 3,
   attackRange: 1,
   maxHealth: 10,
@@ -264,7 +264,7 @@ const character3 = {
 };
 
 const character4 = {
-  currentPosition: 292,
+  currentPosition: 288,
   moveSpeed: 3,
   attackRange: 1,
   maxHealth: 10,
@@ -275,7 +275,7 @@ const character4 = {
 };
 
 const character5 = {
-  currentPosition: 397,
+  currentPosition: 401,
   moveSpeed: 3,
   attackRange: 1,
   maxHealth: 10,
@@ -286,7 +286,7 @@ const character5 = {
 };
 
 const character6 = {
-  currentPosition: 412,
+  currentPosition: 408,
   moveSpeed: 3,
   attackRange: 1,
   maxHealth: 10,
@@ -297,7 +297,7 @@ const character6 = {
 };
 
 const character7 = {
-  currentPosition: 337,
+  currentPosition: 341,
   moveSpeed: 3,
   attackRange: 1,
   maxHealth: 10,
@@ -307,7 +307,7 @@ const character7 = {
   characterSlot: 4
 };
 const character8 = {
-  currentPosition: 352,
+  currentPosition: 348,
   moveSpeed: 3,
   attackRange: 1,
   maxHealth: 10,
