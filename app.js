@@ -16,6 +16,15 @@ function moveMode(){
     enterables.push((position - (moveSpeed - i) * 30) + i * 0.5);
     enterables.push((position + (moveSpeed - i) * 30) - i * 0.5);
     enterables.push((position + (moveSpeed - i) * 30) + i * 0.5);
+    enterables.push((position - (moveSpeed - i) * 30) - i / 3);
+    enterables.push((position - (moveSpeed - i) * 30) + i / 3);
+    enterables.push((position + (moveSpeed - i) * 30) - i / 3);
+    enterables.push((position + (moveSpeed - i) * 30) + i / 3);
+    enterables.push((position - (moveSpeed - i) * 30) - i / 3 * 2);
+    enterables.push((position - (moveSpeed - i) * 30) + i / 3 * 2);
+    enterables.push((position + (moveSpeed - i) * 30) - i / 3 * 2);
+    enterables.push((position + (moveSpeed - i) * 30) + i / 3 * 2);
+
   }
   for (let i = 0; i < enterables.length; i++){
     const isEnterable = $allSquares.eq(enterables[i]);
@@ -43,7 +52,7 @@ function handleMove(){
   $('.enterable').off();
   $('.enterable').removeClass('enterable');
   $currentCharacter = $allSquares.eq(currentCharacter.currentPosition);
-  $currentCharacter.addClass('player' + currentCharacter.player + '-soldier');
+  $currentCharacter.addClass('player' + currentCharacter.player + '-type' + currentCharacter.troopType+ '-soldier');
   occupiedSquares.push(currentCharacter.currentPosition);
   $moveButton.off();
   $moveButton.css('background-color', 'black');
@@ -77,6 +86,10 @@ function attackMode(){
     attackables.push(position + (attackRange - i));
     attackables.push(position - (attackRange - i) * 30);
     attackables.push(position + (attackRange - i) * 30);
+    attackables.push(position - (attackRange - i) * 30 + 1);
+    attackables.push(position + (attackRange - i) * 30 - 1);
+    attackables.push(position - (attackRange - i) * 30 - 1);
+    attackables.push(position + (attackRange - i) * 30 + 1);
   }
   for (let i = 0; i < 8; i++){
     if (attackables.includes(occupiedSquares[i])) {
@@ -84,6 +97,24 @@ function attackMode(){
       attackable.addClass('attackable');
     }
   }
+  let currentTeam;
+  if (currentCharacter.player === 1){
+    currentTeam = player1Characters;
+  } else{
+    currentTeam = player2Characters;
+  }
+  for ( let i = 0; i < currentTeam.length; i++){
+    $allSquares.eq(currentTeam[i].currentPosition).removeClass('attackable');
+  }
+  if ($('.attackable').length === 0){
+    const $newP = $('<p></p>');
+    $newP.html('Nobody in range!');
+    $allSquares.eq(currentCharacter.currentPosition).append($newP);
+    setTimeout(function(){
+      $newP.remove();
+    }, 2000);
+  }
+
   $('.attackable').click(handleAttack);
   $attackButton.off();
   $moveButton.off();
@@ -131,10 +162,9 @@ function handleAttack(){
   const $newP = $('<p></p>');
   $newP.html(damageDealt);
   $allSquares.eq(attackedCharacter.currentPosition).append($newP);
-  function removeP(){
+  setTimeout(function(){
     $newP.remove();
-  }
-  setTimeout(removeP, 2000);
+  }, 2000);
   const $attackedHealth = $('#slot-' + attackedCharacter.player + '-' + attackedCharacter.characterSlot).children('p');
   $attackedHealth.html(attackedCharacter.currentHealth + '/' + attackedCharacter.maxHealth);
   const healthPercentage = (attackedCharacter.currentHealth / attackedCharacter.maxHealth) * 100;
@@ -165,6 +195,7 @@ function cancelAttack(){
 }
 
 function endTurn(){
+  $('#slot-' + currentCharacter.player + '-' + currentCharacter.characterSlot).find('.icon').removeClass('active');
   $allSquares.eq(currentCharacter.currentPosition).removeClass('selected');
   isPlayer1 = !isPlayer1;
   if (isPlayer1){
@@ -193,6 +224,7 @@ function endTurn(){
     $attackButton.css('background-color', 'red');
   }
   $allSquares.eq(currentCharacter.currentPosition).addClass('selected');
+  $('#slot-' + currentCharacter.player + '-' + currentCharacter.characterSlot).find('.icon').addClass('active');
 }
 
 //generates our grid
@@ -238,83 +270,91 @@ const character1 = {
   currentHealth: 10,
   attack: 4,
   player: 1,
-  characterSlot: 1
+  characterSlot: 1,
+  troopType: 1
 };
 
 const character2 = {
-  currentPosition: 346,
+  currentPosition: 346, //344,
   moveSpeed: 3,
   attackRange: 1,
   maxHealth: 10,
   currentHealth: 10,
   attack: 4,
   player: 2,
-  characterSlot: 1
+  characterSlot: 1,
+  troopType: 1
 };
 
 const character3 = {
-  currentPosition: 281,
+  currentPosition: 281,//312,
   moveSpeed: 3,
   attackRange: 1,
   maxHealth: 10,
   currentHealth: 10,
   attack: 4,
   player: 1,
-  characterSlot: 2
+  characterSlot: 2,
+  troopType: 1
 };
 
 const character4 = {
-  currentPosition: 288,
+  currentPosition: 288, //342,
   moveSpeed: 3,
   attackRange: 1,
   maxHealth: 10,
   currentHealth: 10,
   attack: 4,
   player: 2,
-  characterSlot: 2
+  characterSlot: 2,
+  troopType: 1
 };
 
 const character5 = {
-  currentPosition: 401,
+  currentPosition: 401, //374,
   moveSpeed: 3,
   attackRange: 1,
   maxHealth: 10,
   currentHealth: 10,
   attack: 4,
   player: 1,
-  characterSlot: 3
+  characterSlot: 3,
+  troopType: 1
 };
 
 const character6 = {
-  currentPosition: 408,
+  currentPosition: 408, //,313
   moveSpeed: 3,
   attackRange: 1,
   maxHealth: 10,
   currentHealth: 10,
   attack: 4,
   player: 2,
-  characterSlot: 3
+  characterSlot: 3,
+  troopType: 1
 };
 
 const character7 = {
-  currentPosition: 341,
-  moveSpeed: 3,
+  currentPosition: 341,//,372
+  moveSpeed: 4,
   attackRange: 1,
-  maxHealth: 10,
-  currentHealth: 10,
-  attack: 4,
+  maxHealth: 15,
+  currentHealth: 15,
+  attack: 6,
   player: 1,
-  characterSlot: 4
+  characterSlot: 4,
+  troopType: 2
 };
 const character8 = {
-  currentPosition: 348,
-  moveSpeed: 3,
+  currentPosition: 348, //318,
+  moveSpeed: 4,
   attackRange: 1,
-  maxHealth: 10,
-  currentHealth: 10,
-  attack: 4,
+  maxHealth: 15,
+  currentHealth: 15,
+  attack: 6,
   player: 2,
-  characterSlot: 4
+  characterSlot: 4,
+  troopType: 2
 };
 
 //Arrays
@@ -330,6 +370,7 @@ $removeThis.remove();
 
 currentCharacter = character1;
 $allSquares.eq(currentCharacter.currentPosition).addClass('selected');
+$('#slot-' + currentCharacter.player + '-' + currentCharacter.characterSlot).find('.icon').addClass('active');
 
 
 for (let i = 0; i < addedCharacters.length; i++){
@@ -341,8 +382,8 @@ for (let i = 0; i < addedCharacters.length; i++){
   $addingHealth.html(addingCharacter.currentHealth + '/' + addingCharacter.maxHealth);
   $addingSlot.children('.health-bar').css('background-color', 'red');
   $addingSlot.find('.health-green').css('width', '100%');
-  $addingSlot.children('.icon').addClass('player' + addingCharacter.player + '-soldier');
-  $allSquares.eq(addingCharacter.currentPosition).addClass('player' + addingCharacter.player + '-soldier');
+  $addingSlot.children('.icon').addClass('player' + addingCharacter.player + '-type' + addingCharacter.troopType + '-soldier');
+  $allSquares.eq(addingCharacter.currentPosition).addClass('player' + addingCharacter.player + '-type' + addingCharacter.troopType + '-soldier');
 }
 
 

@@ -2,6 +2,10 @@ body{
   font-family: helvetica;
 }
 
+/* .game-screen{
+    display: none;
+} */
+
 section{
   width: 59.5vw;
   height: 15vh;
@@ -77,8 +81,8 @@ h2{
 }
 
 .icon{
-  height: 10vh;
-  width: 5vw;
+  height: 13vh;
+  width: 6vw;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -159,6 +163,11 @@ aside p {
   background-color: rgba(255, 255, 0, 0.75);
 }
 
+.active{
+  background-color: rgba(255, 255, 0, 0.75);
+  border-radius: 50px;
+}
+
 .blood{
   background-image: url(images/blood.png);
   background-repeat: no-repeat;
@@ -166,15 +175,29 @@ aside p {
   background-position: center;
 }
 
-.player1-soldier{
+.player1-type1-soldier{
   background-image: url(images/knife.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 }
 
-.player2-soldier{
+.player2-type1-soldier{
   background-image: url(images/axe.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.player1-type2-soldier{
+  background-image: url(images/wolf.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.player2-type2-soldier{
+  background-image: url(images/horse.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -185,6 +208,7 @@ aside p {
   font-size: 50px;
   font-weight: bold;
   color: red;
+  text-align: center;
 }
 
 .victory-screen{
