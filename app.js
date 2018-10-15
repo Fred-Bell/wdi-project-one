@@ -285,6 +285,7 @@ function cancelAttack(){
 }
 
 function fireball(){
+  $endTurnButton.off();
   $('.attackable').off();
   $('.attackable').removeClass('attackable');
   $allSquares.mouseover(function(){
@@ -305,15 +306,16 @@ function handleFireball(){
   const position = parseInt($(this).html());
   const $newDiv = $('<div></div>');
   $newDiv.attr('id', 'explosion');
-  $newDiv.css({top: $allSquares.eq(position - 30).offset().top + 'px', left: $allSquares.eq(position - 2).offset().left + 'px'});
+  $newDiv.css('top', $allSquares.eq(position).offset().top - 80 + 'px');
+  $newDiv.css('left', $allSquares.eq(position).offset().left - 80 + 'px');
   $('body').append($newDiv);
   setTimeout(function(){
     $newDiv.remove();
   }, 2000);
   const blastzone = [position, position - 1, position + 1, position - 30, position + 30, position - 31, position + 31, position -29, position + 29];
-  for (let i = 0; i < 8; i++){
-    if (blastzone.includes(parseInt(addedCharacters[i].currentPosition))) {
-      const burntCharacter = addedCharacters[i];
+  for (let i = 0; i < livingCharacters.length; i++){
+    const burntCharacter = livingCharacters[i];
+    if (blastzone.includes(parseInt(livingCharacters[i].currentPosition))) {
       const damageDealt = (Math.floor(Math.random() * 3) + 2);
       burntCharacter.currentHealth = burntCharacter.currentHealth - damageDealt;
       const $newP = $('<p></p>');
@@ -324,7 +326,6 @@ function handleFireball(){
       }, 2000);
       if (burntCharacter.currentHealth <= 0) {
         burntCharacter.currentHealth = 0;
-        $('.attackable').off();
         $allSquares.eq(burntCharacter.currentPosition).removeClass().addClass('grid-square').addClass('blood');
         $('#slot-' + burntCharacter.player + '-' + burntCharacter.characterSlot).children('.icon').html('X');
         const indexInLiving = livingCharacters.indexOf(burntCharacter);
