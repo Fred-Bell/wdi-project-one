@@ -1,4 +1,53 @@
 //Functions
+function startGame(){
+  $('.start-menu').css('display', 'none');
+
+}
+
+function placeCharacter(){
+  let currentArray;
+  if (isPlayer1){
+    currentArray = player1Characters;
+  } else{
+    currentArray = player2Characters;
+  }
+  currentCharacter = currentArray[placedCharacters];
+  currentCharacter.currentPosition = parseInt($(this).html());
+  occupiedSquares.push(currentCharacter.currentPosition);
+  $(this).addClass('player' + currentCharacter.player + '-type' + currentCharacter.troopType + '-soldier');
+  placedCharacters = placedCharacters + 1;
+  $(this).off();
+  if (placedCharacters === currentArray.length){
+    $finishedPlacementScreen.css('display', 'flex');
+  }
+}
+
+function finishPlacement1(){
+  isPlayer1 = !isPlayer1;
+  placedCharacters = 0;
+  $finishedPlacementScreen.css('display', 'none');
+  $finishedButton.off();
+  $finishedButton.click(finishPlacement2);
+  $playerBanner.html('Player 2\'s placement phase');
+  $allSquares.removeClass().addClass('grid-square');
+}
+
+function finishPlacement2(){
+  isPlayer1 = true;
+  currentCharacter = character1;
+  $allSquares.eq(currentCharacter.currentPosition).addClass('selected');
+  $('#slot-' + currentCharacter.player + '-' + currentCharacter.characterSlot).find('.icon').addClass('active');
+  $finishedPlacementScreen.css('display', 'none');
+  $finishedButton.off();
+  $playerBanner.html('Player 1\'s turn');
+  for (let i = 0; i < player1Characters.length; i++){
+    const addingCharacter = player1Characters[i];
+    $allSquares.eq(addingCharacter.currentPosition).addClass('player' + addingCharacter.player + '-type' + addingCharacter.troopType + '-soldier');
+  }
+  $('#placement-controls').css('display', 'none');
+  $allSquares.off();
+}
+
 function moveMode(){
   const position = currentCharacter.currentPosition;
   const moveSpeed = currentCharacter.moveSpeed;
@@ -81,15 +130,21 @@ function attackMode(){
   const position = currentCharacter.currentPosition;
   const attackRange = currentCharacter.attackRange;
   const attackables = [];
-  for (let i = 0; i < attackRange; i++){
-    attackables.push(position - (attackRange - i));
-    attackables.push(position + (attackRange - i));
-    attackables.push(position - (attackRange - i) * 30);
-    attackables.push(position + (attackRange - i) * 30);
-    attackables.push(position - (attackRange - i) * 30 + 1);
-    attackables.push(position + (attackRange - i) * 30 - 1);
-    attackables.push(position - (attackRange - i) * 30 - 1);
-    attackables.push(position + (attackRange - i) * 30 + 1);
+  if (currentCharacter.troopType === 3){
+    for (let i = 156; i < 444; i++ ){
+      attackables.push(i);
+    }
+  } else {
+    for (let i = 0; i < attackRange; i++){
+      attackables.push(position - (attackRange - i));
+      attackables.push(position + (attackRange - i));
+      attackables.push(position - (attackRange - i) * 30);
+      attackables.push(position + (attackRange - i) * 30);
+      attackables.push(position - (attackRange - i) * 30 + 1);
+      attackables.push(position + (attackRange - i) * 30 - 1);
+      attackables.push(position - (attackRange - i) * 30 - 1);
+      attackables.push(position + (attackRange - i) * 30 + 1);
+    }
   }
   for (let i = 0; i < 8; i++){
     if (attackables.includes(occupiedSquares[i])) {
@@ -251,6 +306,7 @@ let hasAttacked = false;
 let currentCharacter;
 let characterIndex1 = 1;
 let characterIndex2 = 0;
+let placedCharacters = 0;
 
 //DOM elements
 const $allSquares = $container.children();
@@ -258,84 +314,87 @@ const $removeThis = $('.not-enterable');
 const $moveButton = $('#move-button');
 const $attackButton = $('#attack-button');
 const $endTurnButton = $('#end-turn');
+const $startButton = $('#start-button');
+const $finishedButton = $('#finished-button');
 const $playerBanner = $('h1');
+const $finishedPlacementScreen = $('#finished-placement-screen');
 let $currentCharacter;
 
 //Objects
 const character1 = {
-  currentPosition: 343,
+  currentPosition: 0,
   moveSpeed: 3,
   attackRange: 1,
   maxHealth: 10,
   currentHealth: 10,
-  attack: 4,
+  attack: 5,
   player: 1,
   characterSlot: 1,
   troopType: 1
 };
 
 const character2 = {
-  currentPosition: 346, //344,
+  currentPosition: 0,
   moveSpeed: 3,
   attackRange: 1,
   maxHealth: 10,
   currentHealth: 10,
-  attack: 4,
+  attack: 5,
   player: 2,
   characterSlot: 1,
   troopType: 1
 };
 
 const character3 = {
-  currentPosition: 281,//312,
+  currentPosition: 281,
   moveSpeed: 3,
-  attackRange: 1,
-  maxHealth: 10,
-  currentHealth: 10,
-  attack: 4,
+  attackRange: 30,
+  maxHealth: 5,
+  currentHealth: 5,
+  attack: 3,
   player: 1,
   characterSlot: 2,
-  troopType: 1
+  troopType: 3
 };
 
 const character4 = {
-  currentPosition: 288, //342,
+  currentPosition: 288,
   moveSpeed: 3,
-  attackRange: 1,
-  maxHealth: 10,
-  currentHealth: 10,
-  attack: 4,
+  attackRange: 30,
+  maxHealth: 5,
+  currentHealth: 5,
+  attack: 3,
   player: 2,
   characterSlot: 2,
-  troopType: 1
+  troopType: 3
 };
 
 const character5 = {
-  currentPosition: 401, //374,
+  currentPosition: 401,
   moveSpeed: 3,
   attackRange: 1,
   maxHealth: 10,
   currentHealth: 10,
-  attack: 4,
+  attack: 5,
   player: 1,
   characterSlot: 3,
   troopType: 1
 };
 
 const character6 = {
-  currentPosition: 408, //,313
+  currentPosition: 408,
   moveSpeed: 3,
   attackRange: 1,
   maxHealth: 10,
   currentHealth: 10,
-  attack: 4,
+  attack: 5,
   player: 2,
   characterSlot: 3,
   troopType: 1
 };
 
 const character7 = {
-  currentPosition: 341,//,372
+  currentPosition: 341,
   moveSpeed: 4,
   attackRange: 1,
   maxHealth: 15,
@@ -346,7 +405,7 @@ const character7 = {
   troopType: 2
 };
 const character8 = {
-  currentPosition: 348, //318,
+  currentPosition: 348,
   moveSpeed: 4,
   attackRange: 1,
   maxHealth: 15,
@@ -367,15 +426,8 @@ const player2Characters = [character2, character4, character6, character8];
 ///////////////////////////////////////////////////////////////////////////////////
 $removeThis.remove();
 
-
-currentCharacter = character1;
-$allSquares.eq(currentCharacter.currentPosition).addClass('selected');
-$('#slot-' + currentCharacter.player + '-' + currentCharacter.characterSlot).find('.icon').addClass('active');
-
-
 for (let i = 0; i < addedCharacters.length; i++){
   const addingCharacter = addedCharacters[i];
-  occupiedSquares.push(addingCharacter.currentPosition);
   livingCharacters.push(addingCharacter);
   const $addingSlot = $('#slot-' + addingCharacter.player + '-' + addingCharacter.characterSlot);
   const $addingHealth = $addingSlot.children('p');
@@ -383,14 +435,15 @@ for (let i = 0; i < addedCharacters.length; i++){
   $addingSlot.children('.health-bar').css('background-color', 'red');
   $addingSlot.find('.health-green').css('width', '100%');
   $addingSlot.children('.icon').addClass('player' + addingCharacter.player + '-type' + addingCharacter.troopType + '-soldier');
-  $allSquares.eq(addingCharacter.currentPosition).addClass('player' + addingCharacter.player + '-type' + addingCharacter.troopType + '-soldier');
 }
 
+// this is possibly useful for animating arrows
+// console.log($allSquares.eq(character1.currentPosition).offset().left);
 
 
-
+$allSquares.click(placeCharacter);
+$finishedButton.click(finishPlacement1);
+$startButton.click(startGame);
 $moveButton.click(moveMode);
 $attackButton.click(attackMode);
 $endTurnButton.click(endTurn);
-$moveButton.css('background-color', 'blue');
-$attackButton.css('background-color', 'red');

@@ -6,8 +6,35 @@ body{
     display: none;
 } */
 
+.start-menu{
+  /* display: none; */
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  height: 90vh;
+  width: 80vw;
+  top: 0;
+  left: 10vw;
+  z-index: 3;
+  background-color: darkgray;
+  border: 3px solid black;
+
+}
+
+button{
+  width: 15vw;
+  height: 10vh;
+  background-color: purple;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+}
+
 section{
-  width: 59.5vw;
+  width: 59.4vw;
   height: 15vh;
   background-color: darkgray;
   position: absolute;
@@ -20,7 +47,7 @@ section{
   box-sizing: border-box;
 }
 
-#top-banner{
+.top-banner{
   top: 0;
 }
 
@@ -30,18 +57,21 @@ h1{
   color: red;
 }
 
-#bottom-banner{
+.bottom-banner{
   top: 74.5vh;
   height: 15.5vh;
 }
 
-button{
-  width: 15vw;
-  height: 10vh;
-  background-color: purple;
-  color: white;
-  font-size: 30px;
-  font-weight: bold;
+#attack-button{
+  background-color: red;
+}
+
+#move-button{
+  background-color: blue;
+}
+
+#placement-controls{
+  z-index: 2;
 }
 
 aside{
@@ -176,7 +206,7 @@ aside p {
 }
 
 .player1-type1-soldier{
-  background-image: url(images/knife.png);
+  background-image: url(images/sword.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -198,6 +228,20 @@ aside p {
 
 .player2-type2-soldier{
   background-image: url(images/horse.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.player1-type3-soldier{
+  background-image: url(images/bow.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.player2-type3-soldier{
+  background-image: url(images/arrow.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -226,6 +270,10 @@ aside p {
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+#finished-placement-screen{
+  display: none;
 }
 
 @keyframes fadeOutUp {

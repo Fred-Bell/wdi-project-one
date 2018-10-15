@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
+    <div class="start-menu">
+      <h1>Fred's game</h1>
+      <button type="button" id="start-button">Start Game</button>
+    </div>
     <div class="game-screen">
       <aside class="aside" id="aside-left">
         <h2>Player 1's Army</h2>
@@ -30,8 +34,8 @@
           <p></p>
         </div>
       </aside>
-      <section id="top-banner">
-        <h1>Player 1's turn</h1>
+      <section class="top-banner">
+        <h1>Player 1's placement phase</h1>
       </section>
       <div class="container">
         <div class="not-enterable"></div>
@@ -60,10 +64,15 @@
           <p></p>
         </div>
       </aside>
-      <section id="bottom-banner">
+      <section class="bottom-banner">
         <button type="button" id="move-button">MOVE</button>
         <button type="button" id="attack-button">ATTACK</button>
         <button type="button" id="end-turn">END TURN</button>
+      </section>
+      <div class="victory-screen" id="finished-placement-screen">
+        <button type="button" id="finished-button">Finished</button>
+      </div>
+      <section class="bottom-banner" id="placement-controls">
       </section>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" charset="utf-8"></script>
