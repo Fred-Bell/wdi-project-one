@@ -21,7 +21,6 @@ body{
   z-index: 3;
   background-color: darkgray;
   border: 3px solid black;
-
 }
 
 button{
@@ -242,6 +241,20 @@ aside p {
 
 .player2-type3-soldier{
   background-image: url(images/archer.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.player1-type4-soldier{
+  background-image: url(images/wizard.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.player2-type4-soldier{
+  background-image: url(images/shaman.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

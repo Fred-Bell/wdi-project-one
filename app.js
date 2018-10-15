@@ -100,7 +100,7 @@ function handleMove(){
   currentCharacter.currentPosition = parseInt($(this).html());
   $('.enterable').off();
   $('.enterable').removeClass('enterable');
-  $currentCharacter = $allSquares.eq(currentCharacter.currentPosition);
+  const $currentCharacter = $allSquares.eq(currentCharacter.currentPosition);
   $currentCharacter.addClass('player' + currentCharacter.player + '-type' + currentCharacter.troopType+ '-soldier');
   occupiedSquares.push(currentCharacter.currentPosition);
   $moveButton.off();
@@ -176,6 +176,12 @@ function attackMode(){
   $attackButton.click(cancelAttack);
   $attackButton.html('CANCEL');
   $endTurnButton.off();
+  if (currentCharacter.troopType === 4){
+    $moveButton.html('LIGHTNING BOLT');
+    $moveButton.css('background-color', 'skyblue');
+    $endTurnButton.html('FIRE BALL');
+    $endTurnButton.css('background-color', 'orange');
+  }
 }
 
 function handleAttack(){
@@ -247,6 +253,14 @@ function handleAttack(){
 }
 
 function cancelAttack(){
+  if (currentCharacter.troopType === 4){
+    $moveButton.html('MOVE');
+    $moveButton.css('background-color', 'blue');
+    $endTurnButton.html('END TURN');
+    $endTurnButton.css('background-color', 'purple');
+    $moveButton.off();
+    $endTurnButton.off();
+  }
   $attackButton.html('ATTACK');
   $('.attackable').off();
   $('.attackable').removeClass('attackable');
@@ -328,7 +342,7 @@ const $startButton = $('#start-button');
 const $finishedButton = $('#finished-button');
 const $playerBanner = $('h1');
 const $finishedPlacementScreen = $('#finished-placement-screen');
-let $currentCharacter;
+
 
 //Objects
 const character1 = {
@@ -383,24 +397,24 @@ const character5 = {
   currentPosition: 401,
   moveSpeed: 3,
   attackRange: 1,
-  maxHealth: 10,
-  currentHealth: 10,
-  attack: 5,
+  maxHealth: 8,
+  currentHealth: 8,
+  attack: 1,
   player: 1,
   characterSlot: 3,
-  troopType: 1
+  troopType: 4
 };
 
 const character6 = {
   currentPosition: 408,
   moveSpeed: 3,
   attackRange: 1,
-  maxHealth: 10,
-  currentHealth: 10,
-  attack: 5,
+  maxHealth: 8,
+  currentHealth: 8,
+  attack: 1,
   player: 2,
   characterSlot: 3,
-  troopType: 1
+  troopType: 4
 };
 
 const character7 = {
