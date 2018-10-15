@@ -220,6 +220,16 @@ function handleAttack(){
   setTimeout(function(){
     $newP.remove();
   }, 2000);
+  if (currentCharacter.troopType === 3){
+    const $newDiv = $('<div></div>');
+    $newDiv.addClass('arrow');
+    $newDiv.css({top: $allSquares.eq(currentCharacter.currentPosition).offset().top + 'px', left: $allSquares.eq(currentCharacter.currentPosition).offset().left + 'px'});
+    $('body').append($newDiv);
+    $newDiv.css({top: $allSquares.eq(attackedCharacter.currentPosition).offset().top + 'px', left: $allSquares.eq(attackedCharacter.currentPosition).offset().left + 'px'});
+    setTimeout(function(){
+      $newDiv.remove();
+    }, 200);
+  }
   const $attackedHealth = $('#slot-' + attackedCharacter.player + '-' + attackedCharacter.characterSlot).children('p');
   $attackedHealth.html(attackedCharacter.currentHealth + '/' + attackedCharacter.maxHealth);
   const healthPercentage = (attackedCharacter.currentHealth / attackedCharacter.maxHealth) * 100;
@@ -436,10 +446,6 @@ for (let i = 0; i < addedCharacters.length; i++){
   $addingSlot.find('.health-green').css('width', '100%');
   $addingSlot.children('.icon').addClass('player' + addingCharacter.player + '-type' + addingCharacter.troopType + '-soldier');
 }
-
-// this is possibly useful for animating arrows
-// console.log($allSquares.eq(character1.currentPosition).offset().left);
-
 
 $allSquares.click(placeCharacter);
 $finishedButton.click(finishPlacement1);

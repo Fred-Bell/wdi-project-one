@@ -234,14 +234,14 @@ aside p {
 }
 
 .player1-type3-soldier{
-  background-image: url(images/bow.png);
+  background-image: url(images/bowman.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 }
 
 .player2-type3-soldier{
-  background-image: url(images/arrow.png);
+  background-image: url(images/archer.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -274,6 +274,17 @@ aside p {
 
 #finished-placement-screen{
   display: none;
+}
+.arrow{
+  background-image: url(images/arrow.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  height: 2vh;
+  width: 3vw;
+  z-index: 2;
+  position: absolute;
+  transition: all 0.2s;
 }
 
 @keyframes fadeOutUp {
