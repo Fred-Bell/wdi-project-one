@@ -551,37 +551,7 @@ function endTurn(){
 }
 
 function restart(){
-  $('.game-screen').css('display', 'none');
-  $('.start-menu').css('display', 'flex');
-  $('.victory-screen').remove();
-  $('aside').find('.icon').html('');
-  $allSquares.off();
-  $allSquares.removeClass();
-  isPlayer1 = true;
-  hasMoved = false;
-  hasAttacked = false;
-  currentCharacter;
-  characterIndex1 = 1;
-  characterIndex2 = 0;
-  placedCharacters = 0;
-  numberBought = 0;
-  totalBought = -1;
-  currentPlayer = 1;
-  $endTurnButton.off();
-  $attackButton.off();
-  $moveButton.off();
-  $allSquares.click(placeCharacter);
-  $finishedButton.click(finishPlacement1);
-  $startButton.click(startGame);
-  $moveButton.click(moveMode);
-  $attackButton.click(attackMode);
-  $endTurnButton.click(endTurn);
-  $moveButton.css('background','radial-gradient(royalblue, navy)');
-  $attackButton.css('backgronud', 'radial-gradient(red, darkred)');
-  $('.character-option').children('.player2-type1-soldier').removeClass('player2-type1-soldier').addClass('player1-type1-soldier');
-  $('.character-option').children('.player2-type2-soldier').removeClass('player2-type2-soldier').addClass('player1-type2-soldier');
-  $('.character-option').children('.player2-type3-soldier').removeClass('player2-type3-soldier').addClass('player1-type3-soldier');
-  $('.character-option').children('.player2-type4-soldier').removeClass('player2-type4-soldier').addClass('player1-type4-soldier');
+  document.location.reload();
 }
 
 //generates our grid
