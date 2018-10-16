@@ -284,7 +284,7 @@ function handleAttack(){
       player1Characters.splice(indexInPlayer1, 1);
       if (player1Characters.length === 0) {
         const $newDiv = $('<div></div>').addClass('victory-screen');
-        $newDiv.html('PLAYER Two WINS!!!!');
+        $newDiv.html('PLAYER TWO WINS!!!!');
         $('body').prepend($newDiv);
       }
     }
@@ -293,7 +293,7 @@ function handleAttack(){
       player2Characters.splice(indexInPlayer2, 1);
       if (player2Characters.length === 0) {
         const $newDiv = $('<div></div>').addClass('victory-screen');
-        $newDiv.html('PLAYER One WINS!!!!');
+        $newDiv.html('PLAYER ONE WINS!!!!');
         $('body').prepend($newDiv);
       }
 
@@ -417,7 +417,7 @@ function handleFireball(){
           player1Characters.splice(indexInPlayer1, 1);
           if (player1Characters.length === 0) {
             const $newDiv = $('<div></div>').addClass('victory-screen');
-            $newDiv.html('PLAYER Two WINS!!!!');
+            $newDiv.html('PLAYER TWO WINS!!!!');
             $('body').prepend($newDiv);
           }
         }
@@ -426,7 +426,7 @@ function handleFireball(){
           player2Characters.splice(indexInPlayer2, 1);
           if (player2Characters.length === 0) {
             const $newDiv = $('<div></div>').addClass('victory-screen');
-            $newDiv.html('PLAYER One WINS!!!!');
+            $newDiv.html('PLAYER ONE WINS!!!!');
             $('body').prepend($newDiv);
           }
         }

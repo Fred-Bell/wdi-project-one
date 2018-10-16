@@ -120,7 +120,8 @@ h4{
   margin: 0;
   height: 4vh;
   color: white;
-  font-size: 3vh;
+  font-size: 4vh;
+  text-decoration: underline;
 }
 
 .character-option p {
@@ -129,6 +130,8 @@ h4{
     width: 57vw;
     height: 9vh;
     color: white;
+    font-size: 2.5vh;
+    text-align: center;
 }
 
 .add-button{
