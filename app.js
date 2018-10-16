@@ -673,9 +673,6 @@ const player2Characters = [character2, character4, character6, character8];
 
 ///////////////////////////////////////////////////////////////////////////////////
 $removeThis.remove();
-
-
-
 $allSquares.click(placeCharacter);
 $finishedButton.click(finishPlacement1);
 $startButton.click(startGame);
