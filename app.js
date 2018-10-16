@@ -11,6 +11,7 @@ function addSoldier(){
   const type = $(this).attr('id');
   if (type === 'type1'){
     $('#chosen-' + numberBought).addClass('player' + currentPlayer + '-type1-soldier');
+    thisCharacter.moveSpeed = 3;
     thisCharacter.maxHealth = 15;
     thisCharacter.currentHealth = 15;
     thisCharacter.attack = 6;
@@ -28,6 +29,7 @@ function addSoldier(){
     thisCharacter.troopType = 2;
   } else if (type === 'type3'){
     $('#chosen-' + numberBought).addClass('player' + currentPlayer + '-type3-soldier');
+    thisCharacter.moveSpeed = 3;
     thisCharacter.maxHealth = 5;
     thisCharacter.currentHealth = 5;
     thisCharacter.attack = 2;
@@ -36,6 +38,7 @@ function addSoldier(){
     thisCharacter.troopType = 3;
   } else {
     $('#chosen-' + numberBought).addClass('player' + currentPlayer + '-type4-soldier');
+    thisCharacter.moveSpeed = 3;
     thisCharacter.maxHealth = 8;
     thisCharacter.currentHealth = 8;
     thisCharacter.attack = 1;
@@ -286,6 +289,9 @@ function handleAttack(){
         const $newDiv = $('<div></div>').addClass('victory-screen');
         $newDiv.html('PLAYER TWO WINS!!!!');
         $('body').prepend($newDiv);
+        const $newButton = $('<button>RESTART</button>');
+        $newButton.click(restart);
+        $newDiv.append($newButton);
       }
     }
     if (attackedCharacter.player === 2){
@@ -295,6 +301,9 @@ function handleAttack(){
         const $newDiv = $('<div></div>').addClass('victory-screen');
         $newDiv.html('PLAYER ONE WINS!!!!');
         $('body').prepend($newDiv);
+        const $newButton = $('<button>RESTART</button>');
+        $newButton.click(restart);
+        $newDiv.append($newButton);
       }
 
     }
@@ -419,6 +428,9 @@ function handleFireball(){
             const $newDiv = $('<div></div>').addClass('victory-screen');
             $newDiv.html('PLAYER TWO WINS!!!!');
             $('body').prepend($newDiv);
+            const $newButton = $('<button>RESTART</button>');
+            $newButton.click(restart);
+            $newDiv.append($newButton);
           }
         }
         if (burntCharacter.player === 2){
@@ -428,6 +440,9 @@ function handleFireball(){
             const $newDiv = $('<div></div>').addClass('victory-screen');
             $newDiv.html('PLAYER ONE WINS!!!!');
             $('body').prepend($newDiv);
+            const $newButton = $('<button>RESTART</button>');
+            $newButton.click(restart);
+            $newDiv.append($newButton);
           }
         }
       }
@@ -533,6 +548,40 @@ function endTurn(){
   }
   $allSquares.eq(currentCharacter.currentPosition).addClass('selected');
   $('#slot-' + currentCharacter.player + '-' + currentCharacter.characterSlot).find('.icon').addClass('active');
+}
+
+function restart(){
+  $('.game-screen').css('display', 'none');
+  $('.start-menu').css('display', 'flex');
+  $('.victory-screen').remove();
+  $('aside').find('.icon').html('');
+  $allSquares.off();
+  $allSquares.removeClass();
+  isPlayer1 = true;
+  hasMoved = false;
+  hasAttacked = false;
+  currentCharacter;
+  characterIndex1 = 1;
+  characterIndex2 = 0;
+  placedCharacters = 0;
+  numberBought = 0;
+  totalBought = -1;
+  currentPlayer = 1;
+  $endTurnButton.off();
+  $attackButton.off();
+  $moveButton.off();
+  $allSquares.click(placeCharacter);
+  $finishedButton.click(finishPlacement1);
+  $startButton.click(startGame);
+  $moveButton.click(moveMode);
+  $attackButton.click(attackMode);
+  $endTurnButton.click(endTurn);
+  $moveButton.css('background','radial-gradient(royalblue, navy)');
+  $attackButton.css('backgronud', 'radial-gradient(red, darkred)');
+  $('.character-option').children('.player2-type1-soldier').removeClass('player2-type1-soldier').addClass('player1-type1-soldier');
+  $('.character-option').children('.player2-type2-soldier').removeClass('player2-type2-soldier').addClass('player1-type2-soldier');
+  $('.character-option').children('.player2-type3-soldier').removeClass('player2-type3-soldier').addClass('player1-type3-soldier');
+  $('.character-option').children('.player2-type4-soldier').removeClass('player2-type4-soldier').addClass('player1-type4-soldier');
 }
 
 //generates our grid
