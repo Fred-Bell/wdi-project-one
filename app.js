@@ -1,6 +1,7 @@
 //Functions
 function startGame(){
   $('.start-menu').css('display', 'none');
+  $('.game-screen').css('display', 'flex');
 }
 
 function placeCharacter(){
@@ -27,7 +28,7 @@ function finishPlacement1(){
   $finishedPlacementScreen.css('display', 'none');
   $finishedButton.off();
   $finishedButton.click(finishPlacement2);
-  $playerBanner.html('Player 2\'s placement phase');
+  $playerBanner.html('Player Two\'s placement phase');
   $allSquares.removeClass().addClass('grid-square');
 }
 
@@ -38,7 +39,7 @@ function finishPlacement2(){
   $('#slot-' + currentCharacter.player + '-' + currentCharacter.characterSlot).find('.icon').addClass('active');
   $finishedPlacementScreen.css('display', 'none');
   $finishedButton.off();
-  $playerBanner.html('Player 1\'s turn');
+  $playerBanner.html('Player One\'s turn');
   for (let i = 0; i < player1Characters.length; i++){
     const addingCharacter = player1Characters[i];
     $allSquares.eq(addingCharacter.currentPosition).addClass('player' + addingCharacter.player + '-type' + addingCharacter.troopType + '-soldier');
@@ -103,7 +104,7 @@ function handleMove(){
   $currentCharacter.addClass('player' + currentCharacter.player + '-type' + currentCharacter.troopType+ '-soldier');
   occupiedSquares.push(currentCharacter.currentPosition);
   $moveButton.off();
-  $moveButton.css('background-color', 'black');
+  $moveButton.css('background', 'radial-gradient(dimgray, black)');
   $moveButton.html('MOVE');
   $endTurnButton.click(endTurn);
   hasMoved = true;
@@ -145,7 +146,7 @@ function attackMode(){
       attackables.push(position + (attackRange - i) * 30 + 1);
     }
   }
-  for (let i = 0; i < 8; i++){
+  for (let i = 0; i < livingCharacters.length; i++){
     if (attackables.includes(occupiedSquares[i])) {
       const attackable = $allSquares.eq(occupiedSquares[i]);
       attackable.addClass('attackable');
@@ -160,7 +161,7 @@ function attackMode(){
   for ( let i = 0; i < currentTeam.length; i++){
     $allSquares.eq(currentTeam[i].currentPosition).removeClass('attackable');
   }
-  if ($('.attackable').length === 0){
+  if ($('.attackable').length === 0 && currentCharacter.troopType !== 4){
     const $newP = $('<p></p>');
     $newP.html('Nobody in range!');
     $allSquares.eq(currentCharacter.currentPosition).append($newP);
@@ -176,10 +177,11 @@ function attackMode(){
   $attackButton.html('CANCEL');
   $endTurnButton.off();
   if (currentCharacter.troopType === 4){
-    $moveButton.html('HEAL WOUNDS'); //need to write lightning bolt function (like move function ligtup 4 squares)
-    $moveButton.css('background-color', 'green');
+    $moveButton.html('INVIGORATE');
+    $moveButton.css('background', 'radial-gradient(lime, green)');
+    $moveButton.click(healMode);
     $endTurnButton.html('FIRE BALL');
-    $endTurnButton.css('background-color', 'orange');
+    $endTurnButton.css('background', 'radial-gradient(gold, darkorange)');
     $endTurnButton.click(fireball);
   }
 }
@@ -187,9 +189,9 @@ function attackMode(){
 function handleAttack(){
   if (currentCharacter.troopType === 4){
     $moveButton.html('MOVE');
-    $moveButton.css('background-color', 'black');
+    $moveButton.css('background', 'radial-gradient(dimgray, black)');
     $endTurnButton.html('END TURN');
-    $endTurnButton.css('background-color', 'purple');
+    $endTurnButton.css('background', 'radial-gradient(magenta, indigo)');
     $moveButton.off();
     $endTurnButton.off();
   }
@@ -213,7 +215,7 @@ function handleAttack(){
       player1Characters.splice(indexInPlayer1, 1);
       if (player1Characters.length === 0) {
         const $newDiv = $('<div></div>').addClass('victory-screen');
-        $newDiv.html('PLAYER 2 WINS!!!!');
+        $newDiv.html('PLAYER Two WINS!!!!');
         $('body').prepend($newDiv);
       }
     }
@@ -222,7 +224,7 @@ function handleAttack(){
       player2Characters.splice(indexInPlayer2, 1);
       if (player2Characters.length === 0) {
         const $newDiv = $('<div></div>').addClass('victory-screen');
-        $newDiv.html('PLAYER 1 WINS!!!!');
+        $newDiv.html('PLAYER One WINS!!!!');
         $('body').prepend($newDiv);
       }
 
@@ -246,30 +248,37 @@ function handleAttack(){
   }
   const $attackedHealth = $('#slot-' + attackedCharacter.player + '-' + attackedCharacter.characterSlot).children('p');
   $attackedHealth.html(attackedCharacter.currentHealth + '/' + attackedCharacter.maxHealth);
-  const healthPercentage = (attackedCharacter.currentHealth / attackedCharacter.maxHealth) * 100;
+  let healthPercentage = (attackedCharacter.currentHealth / attackedCharacter.maxHealth) * 100;
   const $attackedBar = $('#slot-' + attackedCharacter.player + '-' + attackedCharacter.characterSlot).find('.health-green');
+  if (healthPercentage > 100){
+    healthPercentage = 100;
+  }
+  if(healthPercentage < 100){
+    $attackedBar.css('background-color', 'lightgreen');
+  }
   $attackedBar.css('width', healthPercentage + '%');
   $('.attackable').off();
   $('.attackable').removeClass('attackable');
   hasAttacked = true;
-  $attackButton.css('background-color', 'black');
+  $attackButton.css('background', 'radial-gradient(dimgray, black)');
   $endTurnButton.click(endTurn);
   $attackButton.html('ATTACK');
   if (!hasMoved){
     $moveButton.click(moveMode);
-    $moveButton.css('background-color', 'blue');
+    $moveButton.css('background', 'radial-gradient(royalblue, navy)');
   }
 }
 
 function cancelAttack(){
   if (currentCharacter.troopType === 4){
     $moveButton.html('MOVE');
-    $moveButton.css('background-color', 'black');
+    $moveButton.css('background', 'radial-gradient(dimgray, black)');
     $endTurnButton.html('END TURN');
-    $endTurnButton.css('background-color', 'purple');
+    $endTurnButton.css('background', 'radial-gradient(magenta, indigo)');
     $moveButton.off();
     $endTurnButton.off();
     $allSquares.off();
+    $allSquares.removeClass('healable');
   }
   $attackButton.html('ATTACK');
   $('.attackable').off();
@@ -280,11 +289,12 @@ function cancelAttack(){
   $endTurnButton.click(endTurn);
   if (!hasMoved){
     $moveButton.click(moveMode);
-    $moveButton.css('background-color', 'blue');
+    $moveButton.css('background', 'radial-gradient(royalblue, navy)');
   }
 }
 
 function fireball(){
+  $moveButton.off();
   $endTurnButton.off();
   $('.attackable').off();
   $('.attackable').removeClass('attackable');
@@ -320,6 +330,7 @@ function handleFireball(){
       burntCharacter.currentHealth = burntCharacter.currentHealth - damageDealt;
       const $newP = $('<p></p>');
       $newP.html(damageDealt);
+      $newP.css('color', 'orange');
       $allSquares.eq(burntCharacter.currentPosition).append($newP);
       setTimeout(function(){
         $newP.remove();
@@ -337,7 +348,7 @@ function handleFireball(){
           player1Characters.splice(indexInPlayer1, 1);
           if (player1Characters.length === 0) {
             const $newDiv = $('<div></div>').addClass('victory-screen');
-            $newDiv.html('PLAYER 2 WINS!!!!');
+            $newDiv.html('PLAYER Two WINS!!!!');
             $('body').prepend($newDiv);
           }
         }
@@ -346,40 +357,95 @@ function handleFireball(){
           player2Characters.splice(indexInPlayer2, 1);
           if (player2Characters.length === 0) {
             const $newDiv = $('<div></div>').addClass('victory-screen');
-            $newDiv.html('PLAYER 1 WINS!!!!');
+            $newDiv.html('PLAYER One WINS!!!!');
             $('body').prepend($newDiv);
           }
         }
       }
       const $attackedHealth = $('#slot-' + burntCharacter.player + '-' + burntCharacter.characterSlot).children('p');
       $attackedHealth.html(burntCharacter.currentHealth + '/' + burntCharacter.maxHealth);
-      const healthPercentage = (burntCharacter.currentHealth / burntCharacter.maxHealth) * 100;
+      let healthPercentage = (burntCharacter.currentHealth / burntCharacter.maxHealth) * 100;
+
       const $attackedBar = $('#slot-' + burntCharacter.player + '-' + burntCharacter.characterSlot).find('.health-green');
+      if (healthPercentage > 100){
+        healthPercentage = 100;
+      }
+      if(healthPercentage < 100){
+        $attackedBar.css('background-color', 'lightgreen');
+      }
       $attackedBar.css('width', healthPercentage + '%');
     }
   }
   cancelAttack();
   $attackButton.off();
-  $attackButton.css('background-color', 'black');
+  $attackButton.css('background', 'radial-gradient(dimgray, black)');
   $allSquares.removeClass('fireball');
   $allSquares.off();
   hasAttacked = true;
 }
 
+function healMode(){
+  $moveButton.off();
+  $endTurnButton.off();
+  $('.attackable').off();
+  $('.attackable').removeClass('attackable');
+  const healables = [];
+  for (let i = 156; i < 444; i++ ){
+    healables.push(i);
+  }
+  for (let i = 0; i < livingCharacters.length; i++){
+    if (healables.includes(occupiedSquares[i])) {
+      const healable = $allSquares.eq(occupiedSquares[i]);
+      healable.addClass('healable');
+    }
+  }
+  $('.healable').click(handleHeal);
+}
+
+function handleHeal(){
+  const healedCharacterArray = livingCharacters.filter(character => {
+    return character.currentPosition === parseInt($(this).html());
+  });
+  const healedCharacter = healedCharacterArray[0];
+  const damageHealed = Math.floor(Math.random() * 4) + 5;
+  healedCharacter.currentHealth = healedCharacter.currentHealth + damageHealed;
+  const $newP = $('<p></p>');
+  $newP.html(damageHealed);
+  $newP.css('color', 'lightgreen');
+  $allSquares.eq(healedCharacter.currentPosition).append($newP);
+  setTimeout(function(){
+    $newP.remove();
+  }, 2000);
+  const $healedHealth = $('#slot-' + healedCharacter.player + '-' + healedCharacter.characterSlot).children('p');
+  $healedHealth.html(healedCharacter.currentHealth + '/' + healedCharacter.maxHealth);
+  let healthPercentage = (healedCharacter.currentHealth / healedCharacter.maxHealth) * 100;
+  const $healedBar = $('#slot-' + healedCharacter.player + '-' + healedCharacter.characterSlot).find('.health-green');
+  if (healthPercentage > 100){
+    healthPercentage = 100;
+    $healedBar.css('background-color', 'fuchsia');
+  }
+  $healedBar.css('width', healthPercentage + '%');
+  $allSquares.off();
+  $allSquares.removeClass('healable');
+  cancelAttack();
+  $attackButton.off();
+  $attackButton.css('background', 'radial-gradient(dimgray, black)');
+  hasAttacked = true;
+}
 
 function endTurn(){
   $('#slot-' + currentCharacter.player + '-' + currentCharacter.characterSlot).find('.icon').removeClass('active');
   $allSquares.eq(currentCharacter.currentPosition).removeClass('selected');
   isPlayer1 = !isPlayer1;
   if (isPlayer1){
-    $playerBanner.html('Player 1\'s turn');
+    $playerBanner.html('Player One\'s turn');
     if (player1Characters.length -1 < characterIndex1){
       characterIndex1 = 0;
     }
     currentCharacter = player1Characters[characterIndex1];
     characterIndex1++;
   } else{
-    $playerBanner.html('Player 2\'s turn');
+    $playerBanner.html('Player Two\'s turn');
     if (player2Characters.length - 1 < characterIndex2){
       characterIndex2 = 0;
     }
@@ -389,12 +455,12 @@ function endTurn(){
   if (hasMoved){
     $moveButton.click(moveMode);
     hasMoved = false;
-    $moveButton.css('background-color', 'blue');
+    $moveButton.css('background', 'radial-gradient(royalblue, navy)');
   }
   if (hasAttacked){
     $attackButton.click(attackMode);
     hasAttacked = false;
-    $attackButton.css('background-color', 'red');
+    $attackButton.css('background', 'radial-gradient(red, darkred)');
   }
   $allSquares.eq(currentCharacter.currentPosition).addClass('selected');
   $('#slot-' + currentCharacter.player + '-' + currentCharacter.characterSlot).find('.icon').addClass('active');
@@ -434,7 +500,7 @@ const $attackButton = $('#attack-button');
 const $endTurnButton = $('#end-turn');
 const $startButton = $('#start-button');
 const $finishedButton = $('#finished-button');
-const $playerBanner = $('h1');
+const $playerBanner = $('h2');
 const $finishedPlacementScreen = $('#finished-placement-screen');
 
 

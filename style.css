@@ -1,35 +1,60 @@
 body{
-  font-family: helvetica;
+  font-family: 'Goudy Bookletter 1911', serif;
 }
 
-/* .game-screen{
+.background{
+  background: url(images/background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  z-index: -2;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  left: 0;
+  top: 0;
+  margin: 0;
+}
+
+.game-screen{
     display: none;
-} */
+}
 
 .start-menu{
-  /* display: none; */
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   position: absolute;
   height: 90vh;
   width: 80vw;
   top: 0;
   left: 10vw;
   z-index: 3;
-  background-color: darkgray;
-  border: 3px solid black;
+  background-color: transparent;
+}
+
+h1{
+  font-size: 10vw;
+  font-weight: bold;
+  background: -webkit-linear-gradient(red, black);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10vh;
+  margin-top: 5vh;
 }
 
 button{
   width: 15vw;
   height: 10vh;
-  background-color: purple;
+  background: radial-gradient(red, darkred);
+  border: 0;
+  border-radius: 25px;
   color: white;
   font-size: 30px;
   font-weight: bold;
+  font-family: 'Goudy Bookletter 1911', serif;
 }
 
 section{
@@ -41,19 +66,20 @@ section{
   display: flex;
   justify-content: space-around;
   align-items: center;
-  border-top: black solid 3px;
-  border-bottom: black solid 3px;
   box-sizing: border-box;
+  background-image: url(images/gray.png);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .top-banner{
   top: 0;
 }
 
-h1{
+h2{
   font-size: 50px;
   font-weight: bold;
-  color: red;
+  color: white;
 }
 
 .bottom-banner{
@@ -62,11 +88,15 @@ h1{
 }
 
 #attack-button{
-  background-color: red;
+  background: radial-gradient(red, darkred);
 }
 
 #move-button{
-  background-color: blue;
+  background: radial-gradient(royalblue, navy);
+}
+
+#end-turn{
+  background: radial-gradient(magenta, indigo);
 }
 
 #placement-controls{
@@ -77,14 +107,17 @@ aside{
   height: 90vh;
   width: 10vw;
   background-color: darkgray;
+  color: white;
   top: 0;
   position: absolute;
-  border: black solid 3px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  background-image: url(images/gray.png);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 #aside-left{
@@ -102,11 +135,11 @@ aside{
   height: 18vh;
 }
 
-h2{
+h3{
   text-align: center;
   font-weight: bold;
   text-decoration: underline;
-  font-size: 28px;
+  font-size: 24px;
 }
 
 .icon{
@@ -115,7 +148,7 @@ h2{
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  font-size: 75px;
+  font-size: 90px;
   text-align: center;
   color: red;
   font-weight: bold;
@@ -198,7 +231,11 @@ aside p {
 }
 
 .fireball{
-    background-color: rgba(255, 100, 0, 0.75);
+    background-color: rgba(255, 100, 0, 0.5);
+}
+
+.healable{
+    background-color: rgba(90, 242, 50, 0.5);
 }
 
 .blood{
@@ -266,10 +303,11 @@ aside p {
 
 .container div p{
   animation: fadeOutUp 2s 1;
-  font-size: 50px;
+  font-size: 60px;
   font-weight: bold;
   color: red;
   text-align: center;
+  z-index: 2;
 }
 
 .victory-screen{
@@ -313,7 +351,7 @@ aside p {
   height: 200px;
   width: 200px;
   background-color: transparent;
-  z-index: 2;
+  z-index: 1;
   position: absolute;
 }
 
