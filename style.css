@@ -38,6 +38,7 @@ body{
 h1{
   font-size: 10vw;
   font-weight: bold;
+  color: darkred;
   background: -webkit-linear-gradient(red, black);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -57,6 +58,110 @@ button{
   font-family: 'Goudy Bookletter 1911', serif;
 }
 
+.build-screen{
+  display: none;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  position: absolute;
+  height: 90vh;
+  width: 80vw;
+  top: 0;
+  left: 10vw;
+  z-index: 1;
+}
+
+.build-selection{
+  width: 80vw;
+  height: 70vh;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.chosen-display{
+  width: 12vw;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  background-image: url(images/gray.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-sizing: border-box;
+  border: 3px solid black;
+}
+
+.build-options{
+    width: 68vw;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.character-option{
+  width: 68vw;
+  height: 17.5vh;
+  box-sizing: border-box;
+  border: 3px solid black;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  background-image: url(images/gray.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+h4{
+  margin: 0;
+  height: 4vh;
+  color: white;
+  font-size: 3vh;
+}
+
+.character-option p {
+    margin: 0;
+    margin-top: 1vh;
+    width: 57vw;
+    height: 9vh;
+    color: white;
+}
+
+.add-button{
+  height: 3vh;
+  width: 4vw;
+  border: 1px solid black;
+  text-align: center;
+  margin-left: 2vw;
+  background: radial-gradient(red, darkred);
+  border: 0;
+  border-radius: 25px;
+  color: white;
+}
+
+.image{
+  height: 13vh;
+  width: 9vw;
+}
+
+.transition-screen{
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  height: 71vh;
+  width: 80vw;
+  top: 16vh;
+  left: 0vw;
+  z-index: 3;
+  background-color: black;
+}
+
 section{
   width: 59.4vw;
   height: 15vh;
@@ -66,7 +171,6 @@ section{
   display: flex;
   justify-content: space-around;
   align-items: center;
-  box-sizing: border-box;
   background-image: url(images/gray.png);
   background-repeat: no-repeat;
   background-size: cover;
@@ -77,7 +181,7 @@ section{
 }
 
 h2{
-  font-size: 50px;
+  font-size: 3vw;
   font-weight: bold;
   color: white;
 }
@@ -110,7 +214,6 @@ aside{
   color: white;
   top: 0;
   position: absolute;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -145,9 +248,6 @@ h3{
 .icon{
   height: 13vh;
   width: 6vw;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
   font-size: 90px;
   text-align: center;
   color: red;

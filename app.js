@@ -1,7 +1,76 @@
 //Functions
 function startGame(){
   $('.start-menu').css('display', 'none');
-  $('.game-screen').css('display', 'flex');
+  $('.build-screen').css('display', 'flex');
+}
+
+function addSoldier(){
+  numberBought = numberBought + 1;
+  totalBought = totalBought + 1;
+  const thisCharacter = addedCharacters[totalBought];
+  const type = $(this).attr('id');
+  if (type === 'type1'){
+    $('#chosen-' + numberBought).addClass('player' + currentPlayer + '-type1-soldier');
+    thisCharacter.maxHealth = 15;
+    thisCharacter.currentHealth = 15;
+    thisCharacter.attack = 6;
+    thisCharacter.player = currentPlayer;
+    thisCharacter.slot = numberBought;
+    thisCharacter.troopType = 1;
+  } else if (type === 'type2'){
+    $('#chosen-' + numberBought).addClass('player' + currentPlayer + '-type2-soldier');
+    thisCharacter.moveSpeed = 4;
+    thisCharacter.maxHealth = 10;
+    thisCharacter.currentHealth = 10;
+    thisCharacter.attack = 5;
+    thisCharacter.player = currentPlayer;
+    thisCharacter.slot = numberBought;
+    thisCharacter.troopType = 2;
+  } else if (type === 'type3'){
+    $('#chosen-' + numberBought).addClass('player' + currentPlayer + '-type3-soldier');
+    thisCharacter.maxHealth = 5;
+    thisCharacter.currentHealth = 5;
+    thisCharacter.attack = 2;
+    thisCharacter.player = currentPlayer;
+    thisCharacter.slot = numberBought;
+    thisCharacter.troopType = 3;
+  } else {
+    $('#chosen-' + numberBought).addClass('player' + currentPlayer + '-type4-soldier');
+    thisCharacter.maxHealth = 8;
+    thisCharacter.currentHealth = 8;
+    thisCharacter.attack = 1;
+    thisCharacter.player = currentPlayer;
+    thisCharacter.slot = numberBought;
+    thisCharacter.troopType = 4;
+  }
+  if (numberBought === 4){
+    currentPlayer = 2;
+    $('.transition-screen').css('display', 'flex');
+    setTimeout(function(){
+      $('.transition-screen').css('display', 'none');
+      $('.chosen-display').children('.image').removeClass().addClass('image');
+      $('.build-screen').children('h2').html('Player Two choose your troops');
+      $('.character-option').children('.player1-type1-soldier').removeClass('player1-type1-soldier').addClass('player2-type1-soldier');
+      $('.character-option').children('.player1-type2-soldier').removeClass('player1-type2-soldier').addClass('player2-type2-soldier');
+      $('.character-option').children('.player1-type3-soldier').removeClass('player1-type3-soldier').addClass('player2-type3-soldier');
+      $('.character-option').children('.player1-type4-soldier').removeClass('player1-type4-soldier').addClass('player2-type4-soldier');
+    },3000);
+    numberBought = 0;
+  }
+  if (totalBought === 7){
+    $('.build-screen').css('display', 'none');
+    $('.game-screen').css('display', 'flex');
+    for (let i = 0; i < addedCharacters.length; i++){
+      const addingCharacter = addedCharacters[i];
+      livingCharacters.push(addingCharacter);
+      const $addingSlot = $('#slot-' + addingCharacter.player + '-' + addingCharacter.characterSlot);
+      const $addingHealth = $addingSlot.children('p');
+      $addingHealth.html(addingCharacter.currentHealth + '/' + addingCharacter.maxHealth);
+      $addingSlot.children('.health-bar').css('background-color', 'red');
+      $addingSlot.find('.health-green').css('width', '100%');
+      $addingSlot.children('.icon').addClass('player' + addingCharacter.player + '-type' + addingCharacter.troopType + '-soldier');
+    }
+  }
 }
 
 function placeCharacter(){
@@ -28,7 +97,7 @@ function finishPlacement1(){
   $finishedPlacementScreen.css('display', 'none');
   $finishedButton.off();
   $finishedButton.click(finishPlacement2);
-  $playerBanner.html('Player Two\'s placement phase');
+  $playerBanner.html('Player Two click the map to place your troops');
   $allSquares.removeClass().addClass('grid-square');
 }
 
@@ -128,7 +197,7 @@ function cancelMove(){
 
 function attackMode(){
   const position = currentCharacter.currentPosition;
-  const attackRange = currentCharacter.attackRange;
+  const attackRange = 1;
   const attackables = [];
   if (currentCharacter.troopType === 3){
     for (let i = 156; i < 444; i++ ){
@@ -491,6 +560,9 @@ let currentCharacter;
 let characterIndex1 = 1;
 let characterIndex2 = 0;
 let placedCharacters = 0;
+let numberBought = 0;
+let totalBought = -1;
+let currentPlayer = 1;
 
 //DOM elements
 const $allSquares = $container.children();
@@ -502,13 +574,12 @@ const $startButton = $('#start-button');
 const $finishedButton = $('#finished-button');
 const $playerBanner = $('h2');
 const $finishedPlacementScreen = $('#finished-placement-screen');
-
+const $addButton = $('.add-button');
 
 //Objects
 const character1 = {
   currentPosition: 0,
   moveSpeed: 3,
-  attackRange: 1,
   maxHealth: 10,
   currentHealth: 10,
   attack: 5,
@@ -520,7 +591,6 @@ const character1 = {
 const character2 = {
   currentPosition: 0,
   moveSpeed: 3,
-  attackRange: 1,
   maxHealth: 10,
   currentHealth: 10,
   attack: 5,
@@ -530,9 +600,8 @@ const character2 = {
 };
 
 const character3 = {
-  currentPosition: 281,
+  currentPosition: 0,
   moveSpeed: 3,
-  attackRange: 30,
   maxHealth: 5,
   currentHealth: 5,
   attack: 2,
@@ -542,9 +611,8 @@ const character3 = {
 };
 
 const character4 = {
-  currentPosition: 288,
+  currentPosition: 0,
   moveSpeed: 3,
-  attackRange: 30,
   maxHealth: 5,
   currentHealth: 5,
   attack: 2,
@@ -554,9 +622,8 @@ const character4 = {
 };
 
 const character5 = {
-  currentPosition: 401,
+  currentPosition: 0,
   moveSpeed: 3,
-  attackRange: 1,
   maxHealth: 8,
   currentHealth: 8,
   attack: 1,
@@ -566,9 +633,8 @@ const character5 = {
 };
 
 const character6 = {
-  currentPosition: 408,
+  currentPosition: 0,
   moveSpeed: 3,
-  attackRange: 1,
   maxHealth: 8,
   currentHealth: 8,
   attack: 1,
@@ -578,9 +644,8 @@ const character6 = {
 };
 
 const character7 = {
-  currentPosition: 341,
-  moveSpeed: 4,
-  attackRange: 1,
+  currentPosition: 0,
+  moveSpeed: 3,
   maxHealth: 15,
   currentHealth: 15,
   attack: 6,
@@ -589,9 +654,8 @@ const character7 = {
   troopType: 2
 };
 const character8 = {
-  currentPosition: 348,
-  moveSpeed: 4,
-  attackRange: 1,
+  currentPosition: 0,
+  moveSpeed: 3,
   maxHealth: 15,
   currentHealth: 15,
   attack: 6,
@@ -603,23 +667,14 @@ const character8 = {
 //Arrays
 const occupiedSquares = [];
 const livingCharacters = [];
-const addedCharacters = [character1, character2, character3, character4, character5, character6, character7, character8];
+const addedCharacters = [character1, character3, character5, character7, character2, character4, character6, character8];
 const player1Characters = [character1, character3, character5, character7];
 const player2Characters = [character2, character4, character6, character8];
 
 ///////////////////////////////////////////////////////////////////////////////////
 $removeThis.remove();
 
-for (let i = 0; i < addedCharacters.length; i++){
-  const addingCharacter = addedCharacters[i];
-  livingCharacters.push(addingCharacter);
-  const $addingSlot = $('#slot-' + addingCharacter.player + '-' + addingCharacter.characterSlot);
-  const $addingHealth = $addingSlot.children('p');
-  $addingHealth.html(addingCharacter.currentHealth + '/' + addingCharacter.maxHealth);
-  $addingSlot.children('.health-bar').css('background-color', 'red');
-  $addingSlot.find('.health-green').css('width', '100%');
-  $addingSlot.children('.icon').addClass('player' + addingCharacter.player + '-type' + addingCharacter.troopType + '-soldier');
-}
+
 
 $allSquares.click(placeCharacter);
 $finishedButton.click(finishPlacement1);
@@ -627,3 +682,4 @@ $startButton.click(startGame);
 $moveButton.click(moveMode);
 $attackButton.click(attackMode);
 $endTurnButton.click(endTurn);
+$addButton.click(addSoldier);
