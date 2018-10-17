@@ -72,6 +72,7 @@ button{
   font-size: 2vw;
   font-weight: bold;
   font-family: 'Goudy Bookletter 1911', serif;
+  cursor: pointer;
 }
 
 .build-screen{
@@ -160,15 +161,18 @@ h4{
   border: 1px solid black;
   text-align: center;
   margin-left: 2vw;
+  margin-top: 2vh;
   background: radial-gradient(red, darkred);
   border: 0;
   border-radius: 25px;
   color: white;
+  cursor: pointer;
 }
 
 .image{
-  height: 13vh;
-  width: 9vw;
+  height: 11vh;
+  width: 8vw;
+  transform: rotate(90deg);
 }
 
 .transition-screen{

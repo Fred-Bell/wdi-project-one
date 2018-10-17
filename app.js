@@ -81,6 +81,7 @@ function addSoldier(){
       $sound.get(0).play();
     },3000);
     numberBought = 0;
+    $('.image').css('transform', 'rotate(270deg)');
   }
   if (totalBought === 7){
     $visibility.css('display', 'flex');
