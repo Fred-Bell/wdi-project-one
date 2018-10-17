@@ -58,6 +58,8 @@ function addSoldier(){
   }
   if (numberBought === 4){
     currentPlayer = 2;
+    $sound.attr('src', 'sounds/player2.mp3');
+    $sound.get(0).play();
     $('.transition-screen').css('display', 'flex');
     setTimeout(function(){
       $('.transition-screen').css('display', 'none');
@@ -115,6 +117,8 @@ function finishPlacement1(){
 }
 
 function finishPlacement2(){
+  $music.attr('src', 'sounds/battleMusic.mp3');
+  $music.get(0).play();
   isPlayer1 = true;
   currentCharacter = character1;
   $allSquares.eq(currentCharacter.currentPosition).addClass('selected');
@@ -128,8 +132,6 @@ function finishPlacement2(){
   }
   $('#placement-controls').css('display', 'none');
   $allSquares.off();
-  $music.attr('src', 'sounds/battleMusic.mp3');
-  $music.get(0).play();
 }
 
 function moveMode(){

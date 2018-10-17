@@ -38,6 +38,7 @@ body{
 h1{
   font-size: 10vw;
   font-weight: bold;
+  text-align: center;
   color: darkred;
   background: -webkit-linear-gradient(red, black);
   -webkit-background-clip: text;
