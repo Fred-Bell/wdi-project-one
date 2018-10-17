@@ -46,9 +46,9 @@ function addSoldier(){
   } else if (type === 'type3'){
     $('#chosen-' + numberBought).addClass('player' + currentPlayer + '-type3-soldier');
     thisCharacter.moveSpeed = 3;
-    thisCharacter.maxHealth = 5;
-    thisCharacter.currentHealth = 5;
-    thisCharacter.attack = 2;
+    thisCharacter.maxHealth = 6;
+    thisCharacter.currentHealth = 6;
+    thisCharacter.attack = 3;
     thisCharacter.player = currentPlayer;
     thisCharacter.slot = numberBought;
     thisCharacter.troopType = 3;
