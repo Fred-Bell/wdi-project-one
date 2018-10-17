@@ -2,6 +2,8 @@
 function startGame(){
   $('.start-menu').css('display', 'none');
   $('.build-screen').css('display', 'flex');
+  $sound.get(0).play();
+  $music.get(0).play();
 }
 
 function addSoldier(){
@@ -18,6 +20,8 @@ function addSoldier(){
     thisCharacter.player = currentPlayer;
     thisCharacter.slot = numberBought;
     thisCharacter.troopType = 1;
+    $sound.attr('src', 'sounds/axe.mp3');
+    $sound.get(0).play();
   } else if (type === 'type2'){
     $('#chosen-' + numberBought).addClass('player' + currentPlayer + '-type2-soldier');
     thisCharacter.moveSpeed = 4;
@@ -27,6 +31,8 @@ function addSoldier(){
     thisCharacter.player = currentPlayer;
     thisCharacter.slot = numberBought;
     thisCharacter.troopType = 2;
+    $sound.attr('src', 'sounds/aragorn.mp3');
+    $sound.get(0).play();
   } else if (type === 'type3'){
     $('#chosen-' + numberBought).addClass('player' + currentPlayer + '-type3-soldier');
     thisCharacter.moveSpeed = 3;
@@ -36,6 +42,8 @@ function addSoldier(){
     thisCharacter.player = currentPlayer;
     thisCharacter.slot = numberBought;
     thisCharacter.troopType = 3;
+    $sound.attr('src', 'sounds/legolas.mp3');
+    $sound.get(0).play();
   } else {
     $('#chosen-' + numberBought).addClass('player' + currentPlayer + '-type4-soldier');
     thisCharacter.moveSpeed = 3;
@@ -45,6 +53,8 @@ function addSoldier(){
     thisCharacter.player = currentPlayer;
     thisCharacter.slot = numberBought;
     thisCharacter.troopType = 4;
+    $sound.attr('src', 'sounds/snape.mp3');
+    $sound.get(0).play();
   }
   if (numberBought === 4){
     currentPlayer = 2;
@@ -52,7 +62,7 @@ function addSoldier(){
     setTimeout(function(){
       $('.transition-screen').css('display', 'none');
       $('.chosen-display').children('.image').removeClass().addClass('image');
-      $('.build-screen').children('h2').html('Player Two choose your troops');
+      $('.build-screen').children('h2').html('Player Two choose four troops');
       $('.character-option').children('.player1-type1-soldier').removeClass('player1-type1-soldier').addClass('player2-type1-soldier');
       $('.character-option').children('.player1-type2-soldier').removeClass('player1-type2-soldier').addClass('player2-type2-soldier');
       $('.character-option').children('.player1-type3-soldier').removeClass('player1-type3-soldier').addClass('player2-type3-soldier');
@@ -118,6 +128,8 @@ function finishPlacement2(){
   }
   $('#placement-controls').css('display', 'none');
   $allSquares.off();
+  $music.attr('src', 'sounds/battleMusic.mp3');
+  $music.get(0).play();
 }
 
 function moveMode(){
@@ -205,6 +217,8 @@ function attackMode(){
   if (currentCharacter.troopType === 3){
     for (let i = 156; i < 444; i++ ){
       attackables.push(i);
+      $sound.attr('src', 'sounds/draw.mp3');
+      $sound.get(0).play();
     }
   } else {
     for (let i = 0; i < attackRange; i++){
@@ -275,6 +289,7 @@ function handleAttack(){
   attackedCharacter.currentHealth = attackedCharacter.currentHealth - damageDealt;
   if (attackedCharacter.currentHealth <= 0) {
     attackedCharacter.currentHealth = 0;
+    $deathSound.get(0).play();
     $('.attackable').off();
     $allSquares.eq(attackedCharacter.currentPosition).removeClass().addClass('grid-square').addClass('blood');
     $('#slot-' + attackedCharacter.player + '-' + attackedCharacter.characterSlot).children('.icon').html('X');
@@ -292,6 +307,8 @@ function handleAttack(){
         const $newButton = $('<button>RESTART</button>');
         $newButton.click(restart);
         $newDiv.append($newButton);
+        $music.attr('src', 'sounds/victory.mp3');
+        $music.get(0).play();
       }
     }
     if (attackedCharacter.player === 2){
@@ -304,6 +321,8 @@ function handleAttack(){
         const $newButton = $('<button>RESTART</button>');
         $newButton.click(restart);
         $newDiv.append($newButton);
+        $music.attr('src', 'sounds/victory.mp3');
+        $music.get(0).play();
       }
 
     }
@@ -345,6 +364,13 @@ function handleAttack(){
     $moveButton.click(moveMode);
     $moveButton.css('background', 'radial-gradient(royalblue, navy)');
   }
+  if (currentCharacter.troopType === 3){
+    $sound.attr('src', 'sounds/arrowImpact.mp3');
+    $sound.get(0).play();
+  } else {
+    $sound.attr('src', 'sounds/sword.mp3');
+    $sound.get(0).play();
+  }
 }
 
 function cancelAttack(){
@@ -372,6 +398,8 @@ function cancelAttack(){
 }
 
 function fireball(){
+  $sound.attr('src', 'sounds/gandalf.mp3');
+  $sound.get(0).play();
   $moveButton.off();
   $endTurnButton.off();
   $('.attackable').off();
@@ -391,6 +419,8 @@ function fireball(){
 }
 
 function handleFireball(){
+  $sound.attr('src', 'sounds/boom.mp3');
+  $sound.get(0).play();
   const position = parseInt($(this).html());
   const $newDiv = $('<div></div>');
   $newDiv.attr('id', 'explosion');
@@ -414,6 +444,7 @@ function handleFireball(){
         $newP.remove();
       }, 2000);
       if (burntCharacter.currentHealth <= 0) {
+        $deathSound.get(0).play();
         burntCharacter.currentHealth = 0;
         $allSquares.eq(burntCharacter.currentPosition).removeClass().addClass('grid-square').addClass('blood');
         $('#slot-' + burntCharacter.player + '-' + burntCharacter.characterSlot).children('.icon').html('X');
@@ -431,6 +462,8 @@ function handleFireball(){
             const $newButton = $('<button>RESTART</button>');
             $newButton.click(restart);
             $newDiv.append($newButton);
+            $music.attr('src', 'sounds/victory.mp3');
+            $music.get(0).play();
           }
         }
         if (burntCharacter.player === 2){
@@ -443,6 +476,8 @@ function handleFireball(){
             const $newButton = $('<button>RESTART</button>');
             $newButton.click(restart);
             $newDiv.append($newButton);
+            $music.attr('src', 'sounds/victory.mp3');
+            $music.get(0).play();
           }
         }
       }
@@ -469,6 +504,8 @@ function handleFireball(){
 }
 
 function healMode(){
+  $sound.attr('src', 'sounds/leviosa.mp3');
+  $sound.get(0).play();
   $moveButton.off();
   $endTurnButton.off();
   $('.attackable').off();
@@ -487,6 +524,8 @@ function healMode(){
 }
 
 function handleHeal(){
+  $sound.attr('src', 'sounds/heal.mp3');
+  $sound.get(0).play();
   const healedCharacterArray = livingCharacters.filter(character => {
     return character.currentPosition === parseInt($(this).html());
   });
@@ -594,6 +633,9 @@ const $finishedButton = $('#finished-button');
 const $playerBanner = $('h2');
 const $finishedPlacementScreen = $('#finished-placement-screen');
 const $addButton = $('.add-button');
+const $sound = $('#sound-effect');
+const $deathSound = $('#death-sound');
+const $music = $('#music');
 
 //Objects
 const character1 = {
