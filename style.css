@@ -490,6 +490,18 @@ aside p {
   transition: all 0.2s;
 }
 
+.arrow2{
+  background-image: url(images/arrow2.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  height: 2vh;
+  width: 3vw;
+  z-index: 2;
+  position: absolute;
+  transition: all 0.2s;
+}
+
 #explosion{
   animation: tada 2s infinite;
   background-image: url(images/boom.png);

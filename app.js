@@ -13,7 +13,7 @@ function coOpGame(){
   $('.game-screen').css('visibility', 'visible');
   $('.map-box').css('background-image', 'url(images/waterfall-map.png)');
   $('.placement1-screen').css('display', 'none');
-  $('h2').html('THIS ISN\'T FINISHED COMING SOON!!!');
+  $('h2').html('THIS ISN\'T FINISHED - COMING SOON!!!');
 }
 
 function addSoldier(){
@@ -371,7 +371,11 @@ function handleAttack(){
   }, 2000);
   if (currentCharacter.troopType === 3){
     const $newDiv = $('<div></div>');
-    $newDiv.addClass('arrow');
+    if (currentCharacter.player === 2){
+      $newDiv.addClass('arrow2');
+    } else {
+      $newDiv.addClass('arrow');
+    }
     $newDiv.css({top: $allSquares.eq(currentCharacter.currentPosition).offset().top + 'px', left: $allSquares.eq(currentCharacter.currentPosition).offset().left + 'px'});
     $('body').append($newDiv);
     $newDiv.css({top: $allSquares.eq(attackedCharacter.currentPosition).offset().top + 'px', left: $allSquares.eq(attackedCharacter.currentPosition).offset().left + 'px'});
