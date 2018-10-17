@@ -7,6 +7,15 @@ function startGame(){
   $music.get(0).play();
 }
 
+function coOpGame(){
+  $('.start-menu').css('display', 'none');
+  $('.game-screen').css('opacity', '1');
+  $('.game-screen').css('visibility', 'visible');
+  $('.map-box').css('background-image', 'url(images/waterfall-map.png)');
+  $('.placement1-screen').css('display', 'none');
+  $('h2').html('THIS ISN\'T FINISHED COMING SOON!!!');
+}
+
 function addSoldier(){
   numberBought = numberBought + 1;
   totalBought = totalBought + 1;
@@ -125,6 +134,9 @@ function finishPlacement1(){
 function finishPlacement2(){
   $music.attr('src', 'sounds/battleMusic.mp3');
   $music.get(0).play();
+  $music.on('end',function(){
+    $music.get(0).play();
+  });
   isPlayer1 = true;
   currentCharacter = character1;
   $allSquares.eq(currentCharacter.currentPosition).addClass('selected');
@@ -660,6 +672,7 @@ const $sound = $('#sound-effect');
 const $deathSound = $('#death-sound');
 const $music = $('#music');
 const $visibility = $('#visibility');
+const $coOpButton = $('#co-op');
 
 //Objects
 const character1 = {
@@ -765,3 +778,4 @@ $moveButton.click(moveMode);
 $attackButton.click(attackMode);
 $endTurnButton.click(endTurn);
 $addButton.click(addSoldier);
+$coOpButton.click(coOpGame);
