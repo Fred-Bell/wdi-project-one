@@ -1,7 +1,8 @@
 //Functions
 function startGame(){
   $('.start-menu').css('display', 'none');
-  $('.build-screen').css('display', 'flex');
+  $('.build-screen').css('opacity', '1');
+  $('.build-screen').css('visibility', 'visible');
   $sound.get(0).play();
   $music.get(0).play();
 }
@@ -56,10 +57,8 @@ function addSoldier(){
     $sound.attr('src', 'sounds/snape.mp3');
     $sound.get(0).play();
   }
-  if (numberBought === 4){
+  if (totalBought === 3){
     currentPlayer = 2;
-    $sound.attr('src', 'sounds/player2.mp3');
-    $sound.get(0).play();
     $('.transition-screen').css('display', 'flex');
     setTimeout(function(){
       $('.transition-screen').css('display', 'none');
@@ -69,12 +68,17 @@ function addSoldier(){
       $('.character-option').children('.player1-type2-soldier').removeClass('player1-type2-soldier').addClass('player2-type2-soldier');
       $('.character-option').children('.player1-type3-soldier').removeClass('player1-type3-soldier').addClass('player2-type3-soldier');
       $('.character-option').children('.player1-type4-soldier').removeClass('player1-type4-soldier').addClass('player2-type4-soldier');
+      $sound.attr('src', 'sounds/player2.mp3');
+      $sound.get(0).play();
     },3000);
     numberBought = 0;
   }
   if (totalBought === 7){
+    $visibility.css('display', 'flex');
+    $visibility.click(toggleMap1);
     $('.build-screen').css('display', 'none');
-    $('.game-screen').css('display', 'flex');
+    $('.game-screen').css('opacity', '1');
+    $('.game-screen').css('visibility', 'visible');
     for (let i = 0; i < addedCharacters.length; i++){
       const addingCharacter = addedCharacters[i];
       livingCharacters.push(addingCharacter);
@@ -114,6 +118,8 @@ function finishPlacement1(){
   $finishedButton.click(finishPlacement2);
   $playerBanner.html('Player Two click the map to place your troops');
   $allSquares.removeClass().addClass('grid-square');
+  $('#placement-screen').removeClass();
+  $('#placement-screen').addClass('placement2-screen');
 }
 
 function finishPlacement2(){
@@ -132,6 +138,21 @@ function finishPlacement2(){
   }
   $('#placement-controls').css('display', 'none');
   $allSquares.off();
+  $('#placement-screen').css('display', 'none');
+}
+
+function toggleMap1(){
+  $('.map-box').css('background-image', 'none');
+  $('.map-box').css('background-color', 'white');
+  $visibility.off();
+  $visibility.click(toggleMap2);
+}
+
+function toggleMap2(){
+  $('.map-box').css('background-image', ' url(images/forest-map.png)');
+  $('.map-box').css('background-color', 'transparent');
+  $visibility.off();
+  $visibility.click(toggleMap1);
 }
 
 function moveMode(){
@@ -436,7 +457,7 @@ function handleFireball(){
   for (let i = 0; i < livingCharacters.length; i++){
     const burntCharacter = livingCharacters[i];
     if (blastzone.includes(parseInt(livingCharacters[i].currentPosition))) {
-      const damageDealt = (Math.floor(Math.random() * 3) + 2);
+      const damageDealt = (Math.floor(Math.random() * 3) + 3);
       burntCharacter.currentHealth = burntCharacter.currentHealth - damageDealt;
       const $newP = $('<p></p>');
       $newP.html(damageDealt);
@@ -638,6 +659,7 @@ const $addButton = $('.add-button');
 const $sound = $('#sound-effect');
 const $deathSound = $('#death-sound');
 const $music = $('#music');
+const $visibility = $('#visibility');
 
 //Objects
 const character1 = {

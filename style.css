@@ -2,6 +2,13 @@ body{
   font-family: 'Goudy Bookletter 1911', serif;
 }
 
+#visibility{
+  position: absolute;
+  top: 90vh;
+  left: 42vw;
+  display: none;
+}
+
 .background{
   background: url(images/background.jpg);
   background-repeat: no-repeat;
@@ -17,7 +24,10 @@ body{
 }
 
 .game-screen{
-    display: none;
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 3000ms, visibility 3000ms;
 }
 
 .start-menu{
@@ -60,7 +70,10 @@ button{
 }
 
 .build-screen{
-  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 4000ms, visibility 4000ms;
+  display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
@@ -166,6 +179,25 @@ h4{
   background-color: black;
 }
 
+.placement1-screen{
+  height: 60vh;
+  width: 30vw;
+  top: 15vh;
+  left: 49.5vw;
+  position: absolute;
+  z-index: 2;
+  background-color: rgba(5, 5, 5, 0.5);
+}
+.placement2-screen{
+  height: 60vh;
+  width: 30vw;
+  top: 15vh;
+  left: 20vw;
+  position: absolute;
+  z-index: 2;
+  background-color: rgba(5, 5, 5, 0.5);
+}
+
 section{
   width: 59.4vw;
   height: 15vh;
@@ -194,6 +226,7 @@ h2{
   top: 74.5vh;
   height: 15.5vh;
 }
+
 
 #attack-button{
   background: radial-gradient(red, darkred);
@@ -420,7 +453,7 @@ aside p {
   top: 15vh;
   left: 20vw;
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   background-color: rgba(5, 5, 5, 0.5);
   font-size: 100px;
   font-weight: bold;
