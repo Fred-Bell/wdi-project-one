@@ -14,6 +14,16 @@ function coOpGame(){
   $('.map-box').css('background-image', 'url(images/waterfall-map.png)');
   $('.placement1-screen').css('display', 'none');
   $('h2').html('THIS ISN\'T FINISHED - COMING SOON!!!');
+  for (let i = 0; i < addedCharacters.length; i++){
+    const addingCharacter = addedCharacters[i];
+    livingCharacters.push(addingCharacter);
+    const $addingSlot = $('#slot-' + addingCharacter.player + '-' + addingCharacter.characterSlot);
+    const $addingHealth = $addingSlot.children('p');
+    $addingHealth.html(addingCharacter.currentHealth + '/' + addingCharacter.maxHealth);
+    $addingSlot.children('.health-bar').css('background-color', 'red');
+    $addingSlot.find('.health-green').css('width', '100%');
+    $addingSlot.children('.icon').addClass('player' + addingCharacter.player + '-type' + addingCharacter.troopType + '-soldier');
+  }
 }
 
 function addSoldier(){
@@ -683,9 +693,9 @@ const $coOpButton = $('#co-op');
 const character1 = {
   currentPosition: 0,
   moveSpeed: 3,
-  maxHealth: 10,
-  currentHealth: 10,
-  attack: 5,
+  maxHealth: 15,
+  currentHealth: 15,
+  attack: 6,
   player: 1,
   characterSlot: 1,
   troopType: 1
@@ -694,9 +704,9 @@ const character1 = {
 const character2 = {
   currentPosition: 0,
   moveSpeed: 3,
-  maxHealth: 10,
-  currentHealth: 10,
-  attack: 5,
+  maxHealth: 15,
+  currentHealth: 15,
+  attack: 6,
   player: 2,
   characterSlot: 1,
   troopType: 1
@@ -705,9 +715,9 @@ const character2 = {
 const character3 = {
   currentPosition: 0,
   moveSpeed: 3,
-  maxHealth: 5,
-  currentHealth: 5,
-  attack: 2,
+  maxHealth: 6,
+  currentHealth: 6,
+  attack: 3,
   player: 1,
   characterSlot: 2,
   troopType: 3
@@ -716,9 +726,9 @@ const character3 = {
 const character4 = {
   currentPosition: 0,
   moveSpeed: 3,
-  maxHealth: 5,
-  currentHealth: 5,
-  attack: 2,
+  maxHealth: 6,
+  currentHealth: 6,
+  attack: 3,
   player: 2,
   characterSlot: 2,
   troopType: 3
@@ -749,9 +759,9 @@ const character6 = {
 const character7 = {
   currentPosition: 0,
   moveSpeed: 3,
-  maxHealth: 15,
-  currentHealth: 15,
-  attack: 6,
+  maxHealth: 10,
+  currentHealth: 10,
+  attack: 5,
   player: 1,
   characterSlot: 4,
   troopType: 2
@@ -759,9 +769,9 @@ const character7 = {
 const character8 = {
   currentPosition: 0,
   moveSpeed: 3,
-  maxHealth: 15,
-  currentHealth: 15,
-  attack: 6,
+  maxHealth: 10,
+  currentHealth: 10,
+  attack: 5,
   player: 2,
   characterSlot: 4,
   troopType: 2
