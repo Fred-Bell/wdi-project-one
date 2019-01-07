@@ -1,8 +1,8 @@
 # General Assembly WDI Project 1: Jungle is Massive
 
-[GitHub Pages](https://fred-bell.github.io/wdi-project-one/)
+[GitHub Pages](https://fwgbell.github.io/wdi-project-one/)
 
-[GitHub Repo](https://github.com/Fred-Bell/wdi-project-one)
+[GitHub Repo](https://github.com/fwgbell/wdi-project-one)
 
 Jungle is Massive is my first project from General Assembly's Web Development Immersive course. It was an individual project built in just over a week, and was both the first fleshed out game I had built, and my first full project with JavaScript, having only been studying it for two weeks.
 
@@ -105,30 +105,38 @@ At this point in production I had only done minimal styling and had mainly focus
 
 #### Featured piece of code 2
 
+This piece of code was the styling for my explosion div which is placed on the page when a fireball spell is cast.
+
 ``` CSS
-bit of css{
-  which-is: good;
+#explosion{
+  animation: tada 2s infinite;
+  background-image: url(images/boom.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 200px;
+  width: 200px;
+  background-color: transparent;
+  z-index: 1;
+  position: absolute;
+}
+
+@keyframes tada {
+  0% {transform: scale(1);}
+  10%, 20% {transform: scale(0.9) rotate(-3deg);}
+  30%, 50%, 70%, 90% {transform: scale(1.1) rotate(3deg);}
+  40%, 60%, 80% {transform: scale(1.1) rotate(-3deg);}
+  100% {transform: scale(1) rotate(0);}
 }
 
 ```
-
-### Adding new features
-
-blablabla about more variety in gameplay
-
-___
-
-## Wins and Blockers
-
-blablabla
-
-
 ___
 
 ## Future Features
 
-blablabla
+There was quite a lot of future features I intended to add to the game but couldn't due to the strict time constraints. If I had more time to work on the project I would add:
 
-* bla
-* bla
-* bla
+* Further improve the animations and sounds of the game
+* I would really like to improve the mobile responsiveness
+* More variety in troop types, battle map or gameplay in general
+* Other game modes such as the Cooperative mode I started work towards
