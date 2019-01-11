@@ -46,7 +46,7 @@ I had to:
 
 ![build army page](screenshots/build-screen.png)
 
-### After each player has chosen their armys they place their troops on their half of the game grid
+### After each player has chosen their armies they place their troops on their half of the game grid
 
 ![placement stage screenshot](screenshots/placement-stage.png)
 
@@ -130,6 +130,16 @@ This piece of code was the styling for my explosion div which is placed on the p
 }
 
 ```
+___
+
+## Wins and Blockers
+
+
+A huge win was building the game itself, and really pushing the limits of what I had learnt so far, especially with more complex CSS3 and jQuery. I am also very happy with the amount of replay value I feel the game has.
+
+I think the biggest blocker was coming up with how I would keep track of all the various different stats and character data. There was so much important information the game needs to be able to run without encountering bugs that at first I was a bit lost with it all. Once I had come up with storing it into a series of useful objects I was then able to put those objects in to appropriate arrays and it became much simpler to know where each piece of data was stored.
+I think this project really cemented my core knowledge of JavaScript especially array methods because of this.
+
 ___
 
 ## Future Features
