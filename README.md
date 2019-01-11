@@ -10,6 +10,32 @@ Jungle is Massive is a top-down, turn and grid based battle strategy game for tw
 
 ___
 
+## Brief
+
+I had to:
+
+* **Render a grid-based game in the browser**
+* **Switch turns** between two players
+* **Design logic for winning** & **visually display which player won**
+* **Include separate HTML / CSS / JavaScript files**
+* Use **Javascript or jQuery** for **DOM manipulation**
+* Use **semantic markup** for HTML and CSS (adhere to best practices)
+
+---
+
+## Technologies Used:
+
+* HTML5 with HTML5 audio
+* CSS3 with animation
+* JavaScript (ECMAScript6)
+* jQuery
+* Git
+* GitHub
+* Google Fonts
+* Photoshop
+
+---
+
 ## Screenshot Walk-through
 
 ### Main Title Page
@@ -35,32 +61,6 @@ ___
 ### Once one player has lost all of his troops the game ends and the victory screen declares the other player the victor
 
 ![victory screen](screenshots/win-screen.png)
-
----
-
-## Brief
-
-I had to:
-
-* **Render a grid-based game in the browser**
-* **Switch turns** between two players
-* **Design logic for winning** & **visually display which player won**
-* **Include separate HTML / CSS / JavaScript files**
-* Use **Javascript or jQuery** for **DOM manipulation**
-* Use **semantic markup** for HTML and CSS (adhere to best practices)
-
----
-
-## Technologies Used:
-
-* HTML5 with HTML5 audio
-* CSS3 with animation
-* Javascript (ECMAScript6)
-* jQuery
-* Git
-* GitHub
-* Google Fonts
-* Photoshop
 
 ___
 
